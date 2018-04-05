@@ -1,0 +1,25 @@
+{
+  "varer": [
+    {
+      "varetype": "enhed",
+      "varenavn": "Almindelig øl",
+      "varebillede": "images/produkter/produkt1.jpg",
+      "enhedspris": "6.75"
+    },
+    {
+      "varetype": "enhed",
+      "varenavn": "Specialøl",
+      "varebillede": "images/produkter/produkt2.jpg",
+      "enhedspris": "8.25"
+    },
+    {
+      "varetype": "ikroner",
+      "varenavn": "Slik",
+      "varebillede": "images/produkter/produkt1.jpg",
+      "enhedspris1": "0.5",
+      "enhedspris2": "1",
+      "enhedspris3": "5",
+      "enhedspris4": "10",
+    }
+  ]
+}

@@ -1,0 +1,94 @@
+<?php
+
+class MY_Controller extends CI_Controller {
+
+    public function counter(){
+			$this->load->model('Counter_model');
+
+			date_default_timezone_set('Europe/Copenhagen');
+			$ip		= $_SERVER['REMOTE_ADDR'];
+			$today	= time();
+			$dato = date("d/m-Y");
+			$needCountByDate = false;
+
+			//Update count by IP
+			$query = $this->Counter_model->get_count_by_ip($ip);
+			if(count($query) > 1){
+				echo "ERROR IN COUNTER";
+			} else if(count($query) == 1)  {
+
+				//If ip have visited page before
+				if(abs($today - $query[0]->lastCount) > 60*30) {
+
+						$countpp	= $query[0]->count+1;
+						$opdateretcount = $query[0]->count;
+						$id			= $query[0]->id;
+
+						$data = array(
+						'count' => $opdateretcount,
+						'lastCount' => $today,
+						'lastcountdato' => $dato
+						);
+						$query = $this->Counter_model->update_count_by_ip($ip, $data);
+
+						$needCountByDate = true;
+				}
+			}	else {
+				$data = array(
+					'ip' => $ip,
+     		   	'count' => 1,
+					'lastCount' => $today,
+					'lastcountdato' => $dato
+      		);
+				$this->Counter_model->insert_count_by_ip($data);
+				$needCountByDate = true;
+			}
+
+
+			if($needCountByDate){			
+				//Update count by DATO
+				$queryOnDate = $this->Counter_model->get_count_by_date($dato);
+				if(count($queryOnDate) > 2){
+					echo "ERROR IN COUNTERDATE";
+				} else if(count($queryOnDate) == 1){
+						$data = array(
+						 'count' => ($queryOnDate[0]->count)+1
+						);
+						$this->Counter_model->update_count_by_date($dato, $data);
+				}	else {
+					$data = array(
+						'dato' => $dato,
+						'count' => 1
+					);
+					$this->Counter_model->insert_count_by_date($data);
+				}
+				//END Update count by DATO
+			}
+    }
+
+
+	function recaptcha_matches() {
+		     $CI =& get_instance();
+		     $CI->config->load('recaptcha');
+		     $public_key = $CI->config->item('recaptcha_public_key');
+		     $private_key = $CI->config->item('recaptcha_private_key');
+		     $response_field = $CI->input->post('recaptcha_response_field');
+		     $challenge_field = $CI->input->post('recaptcha_challenge_field');
+		     $response = recaptcha_check_answer($private_key,
+		                                        $_SERVER['REMOTE_ADDR'],
+		                                        $challenge_field,
+		                                        $response_field);
+		     if ($response->is_valid)
+		     {
+		         return TRUE;
+		     }
+		     else 
+		     {
+		         $CI->validation->recaptcha_error = $response->error;
+		         $CI->validation->set_message('recaptcha_matches', 'The %s is incorrect. Please try again.');
+		         return FALSE;
+		     }
+		 }
+
+
+}

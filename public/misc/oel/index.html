@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+  <title>Ølkælder - digital stregliste</title>
+
+
+
+  <meta charset="UTF-8">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1,user-scalable=no">
+
+  <meta name="apple-mobile-web-app-capable" content="yes">
+
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+
+
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:300,700' rel='stylesheet' type='text/css'>
+
+  <link rel='stylesheet' href='style.css?v=1.3'>
+
+</head>
+
+
+
+<!-- ALUMNELISTE -->
+
+
+
+<aside id="alumneliste">
+
+  <div class="luk">
+
+    
+
+  </div>
+
+  <div class="liste">
+
+    <h1>Aktive brugere</h1>
+
+    <p>
+
+      Alumner som ikke har betalt depositum (eller har for stort minus) kan ikke benytte alumnenr til betaling.
+
+    </p>
+
+
+
+    <ul id="alumneliste-checkout">
+
+
+
+    </ul>
+
+  </div>
+
+</aside>
+
+
+
+<!-- FORDELING -->
+
+
+
+<!-- <aside id="fordel">
+
+  <div class="fordeling">
+
+    <h1>Fordel</h1>
+
+    <ul >
+
+      <li>
+
+        <div class="antal">1</div>
+
+        <div class="x">x</div>
+
+        <div class="produkt">Produkt 1</div>
+
+      </li>
+
+    </ul>
+
+
+
+    <h2>Deles af</h2>
+
+
+
+    <ul>
+
+      <li>
+
+        <div class="antal">25%</div>
+
+        <div class="x">x</div>
+
+        <div class="produkt">Jonatan</div>
+
+        <div class="knapper">
+
+         <div class="slet">slet</div>
+
+       </div>
+
+     </li>
+
+     <li>
+
+      <div class="antal">25%</div>
+
+      <div class="x">x</div>
+
+      <div class="produkt">Toke</div>
+
+      <div class="knapper">
+
+       <div class="slet">slet</div>
+
+     </div>
+
+   </li>
+
+   <li>
+
+    <div class="antal">25%</div>
+
+    <div class="x">x</div>
+
+    <div class="produkt">Jesper</div>
+
+    <div class="knapper">
+
+     <div class="slet">slet</div>
+
+   </div>
+
+ </li>
+
+ <li>
+
+  <div class="antal">25%</div>
+
+  <div class="x">x</div>
+
+  <div class="produkt">Andreas</div>
+
+  <div class="knapper">
+
+   <div class="slet">slet</div>
+
+ </div>
+
+</li>
+
+</ul>
+
+</div>
+
+<div class="fordeltil">
+
+  <h2>Fordel mellem</h2>
+
+  <ul>
+
+    <li>
+
+      <div class="shopperid">3</div>
+
+      <div class="alumnenavn">Magnus Tagmus</div>
+
+      <div class="knapper">
+
+       <div class="vaelg">vælg</div>
+
+     </div>
+
+   </li>
+
+   <li>
+
+    <div class="shopperid">5</div>
+
+    <div class="alumnenavn">Edward Snowden</div>
+
+    <div class="knapper">
+
+     <div class="vaelg">vælg</div>
+
+   </div>
+
+ </li>
+
+ <li>
+
+  <div class="shopperid">6</div>
+
+  <div class="alumnenavn">Wesley Snipes</div>
+
+  <div class="knapper">
+
+   <div class="vaelg">vælg</div>
+
+ </div>
+
+</li>
+
+</ul>
+
+</div>
+
+<div class="info">
+
+  <div id="gem" class="buttonleft">
+
+    Gem fordeling
+
+  </div>
+
+  <div id="tilbage" class="buttonright">
+
+   Fortryd
+
+ </div>
+
+</div>
+
+</aside> -->
+
+
+
+<!-- STANDARD VISNING, skal altid være synlig-->
+
+
+
+<aside class="background">
+
+  <div class="logo">
+
+    <img src="images/GAHK_logo.png" alt="Gustav Adolf Hagemanns Kollegium">
+
+  </div>
+
+
+
+<div id="basket">
+
+  <div class="basket">
+
+      <div class="close" id="nulstil"></div>
+
+      <h1>Dine indtastninger:</h1>
+
+      <ul id="basket-list"></ul>
+
+      <div id="total"> </div>
+
+ <!--     <ul>
+
+        <li style="display:visisble;">
+
+          <div class="antal">1</div>
+
+          <div class="x">x</div>
+
+          <div class="produkt">Produkt 1</div>
+
+          <div class="knapper">
+
+           <div class="slet">slet</div>
+
+           <div class="fordel">fordel</div>
+
+         </div>
+
+       </li>
+
+
+
+       <li style="display:visisble;">
+
+         <div class="antal">1</div>
+
+         <div class="x">x</div>
+
+         <div class="produkt">Produkt 2</div>
+
+         <div class="knapper">
+
+           <div class="slet">slet</div>
+
+           <div class="fordel">fordel</div>
+
+         </div>
+
+       </li>
+
+
+
+       <li style="display:visisble;">
+
+         <div class="antal">1</div>
+
+         <div class="x">x</div>
+
+         <div class="produkt">Produkt 3</div>
+
+         <div class="knapper">
+
+          <div class="slet">slet</div>
+
+          <div class="fordel">fordel</div>
+
+        </div>
+
+      </li>
+
+
+
+    </ul> -->
+
+  </div> 
+
+<!--
+
+  <div id="fordeltpaaandre">
+
+    <div class="andre">
+
+      <h2>Indtastninger for Wesley Snipes</h2>
+
+      <ul>
+
+        <li style="display:visible;">
+
+          <div class="antal">1</div>
+
+          <div class="x">x</div>
+
+          <div class="produkt">Produkt 4</div>
+
+          <div class="knapper">
+
+           <div class="slet">slet</div>
+
+           <div class="fordel">fordel</div>
+
+         </div>
+
+       </li>
+
+     </ul>
+
+   </div> -->
+
+ </div>
+
+
+
+</div>
+<div id="andre">
+<div class="andre">
+<h1>Fordelt på:</h1><div class="close" id="nulstilAlumnums"></div>
+<ul id="alumne-distribution-list"></ul>
+
+<div id="buttonCheckOut">Check ud</div>
+</div>
+</div>
+
+
+<!-- MEDLEMS CHECK UD-->
+
+<div id="medlem">
+
+
+
+  <div class="medlem">
+
+    <h1>Check ud: <span id="shopper-id"></span></h1> 
+
+
+
+    <ul id="checkout-nos" >
+
+    <!--  <li>1</li>
+
+      <li>2</li>
+
+      <li>3</li>
+
+      <li>4</li>
+
+      <li>5</li>
+
+      <li>6</li>
+
+      <li>7</li>
+
+      <li>8</li>
+
+      <li>9</li>
+
+      <li class="neutral"></li>
+
+      <li>0</li>
+
+      <li class="neutral"></li> -->
+
+    </ul>
+
+  </div>
+
+</div>
+
+
+
+   </aside>
+
+
+
+   <!-- CHECK OUT -->
+
+<div id="checkout">
+
+
+
+  <div id="confirmation" class="box">
+
+    <p>Tak for din registrering</p>
+
+    <h1 id="confirmationname"></h1>
+
+    <p></p>
+
+    <div id="fortryd" class="buttoncheckout">Fortryd</div>
+
+      <div id="godkend" class="buttoncheckout">Fast lane</div>
+
+      
+
+    
+
+    <input id="stopTransaction" type="hidden" >
+
+    <input id="confirmTransaction" type="hidden">
+
+  </div>
+
+
+
+  <div id="nocredit" class="box">
+
+    <h1 id="nocreditname"></h1>
+
+    <p>Du kan <u>ikke</u> købe disse varer fordi du din saldo er for lav.</p>
+
+    
+
+    <p>Kontakt ølkælderen for at for din konto åbnet</p>
+
+    <div id="oknocredit" class="buttoncheckout">
+
+      OK
+
+    </div>
+
+  </div>
+
+
+
+  <div id="wrongnumber" class="box">
+
+    <h1>Forkert nummer</h1>
+
+    <p>Det indtastede alumne ID findes ikke.</p>
+
+    
+
+    <p>Prøv igen eller vælg fra alumnelisten.</p>
+
+    <div id="okwrongnumber" class="buttoncheckout">
+
+      OK
+
+    </div>
+
+  </div>
+
+
+
+</div>
+
+<!--    <article>
+
+    <ul>
+
+      <li>
+
+        <div class="produktoverlay" style="display:none;">7</div>
+
+        <img src="images/tuborg.jpg" alt="">
+
+        <div class="produktnavn">Almindelig øl</div>
+
+        <div class="pris">kr 6,75</div>
+
+      </li>
+
+
+
+      <li>
+
+       <div class="produktoverlay" style="display:visible;">7</div>
+
+       <img src="images/tuborg.jpg" alt="">
+
+       <div class="produktnavn">Almindelig øl</div>
+
+       <div class="pris">kr 6,75</div>
+
+     </li>
+
+
+
+     <li>
+
+      <div class="produktoverlay" style="display:none;">23</div>
+
+      <div id="1kr" class="topleft number">1</div>
+
+      <div id="2kr" class="topright number">2</div>
+
+      <div id="5kr" class="bottomleft"><div class="prisleft number">5</div></div>
+
+      <div id="10kr" class="bottomright"><div class="prisright number">10</div></div>
+
+      <img src="images/slik.jpg" alt="">
+
+      <div class="produktnavn">Slik</div>
+
+      <div class="pris">i hele kroner</div>
+
+    </li>
+
+
+
+    <li>
+
+      <div class="produktoverlay" style="display:visible;">23</div>
+
+      <div id="1" class="topleft number">1</div>
+
+      <div id="2" class="topright number">2</div>
+
+      <div id="5" class="bottomleft"><div class="prisleft number">5</div></div>
+
+      <div id="10" class="bottomright"><div class="prisright number">10</div></div>
+
+      <img src="images/slik.jpg" alt="">
+
+      <div class="produktnavn">Slik</div>
+
+      <div class="pris">i hele kroner</div>
+
+    </li>
+
+
+
+
+
+
+
+  </ul>
+
+
+
+  </article> -->
+
+<article>
+
+<ul id="product-item-list"></ul>
+
+  
+
+</article>
+
+
+
+
+
+
+
+    <script type="text/template" id="alumne-checkout">
+
+<div class="knapper">
+
+         <div class="checkudsom">check ud som</div>
+         <div class="fordel">fordel på</div>
+
+       </div>
+
+        <div class="shopperid"><%= alumnumId%></div>
+
+        <div class="alumnenavn"><%= name%></div>
+
+        
+
+
+
+    </script>
+<script type="text/template" id="alumne-distribution">
+
+
+<div class="alumnumName" ><%= name%></div>
+<div class="fjern">slet</div>
+</script>
+
+
+    <script type="text/template" id="numbers">
+
+      <li><%=number%></li>
+
+    </script>
+
+
+
+    <script type="text/template" id="specialproduct-item">
+
+    <li>
+
+    <div id="1" class="topleft number"><%=price_steps1%></div>
+
+    <div id="2" class="topright number"><%=price_steps2%></div>
+
+    <div id="3" class="bottomleft"><div class="prisleft number"><%=price_steps3%></div></div>
+
+    <div id="4" class="bottomright"><div class="prisright number"><%=price_steps4%></div></div>
+
+    <img src=<%= imageurl %>>
+
+    <div class="produktnavn"><%= name %></div>
+
+    </li>
+
+    </script>
+
+
+
+    <script type="text/template" id="product-item">
+
+    <li>
+
+     <img src=<%= imageurl %>>
+
+     <a class="produktnavn"><%= name %></a>
+
+           <span class="pris">kr <%= current_price %></span>
+
+          </li> 
+
+    </script>
+
+
+
+
+
+
+
+      <script type="text/template" id="basket-item">
+
+      <li>
+
+      <div class="antal"><%= quantity %> </div>
+
+      <div class="quantityType"><%=quantity_type%></div>
+
+        <div class="produkt"><%= name %></div>
+
+        <div class="slet">slet</div>
+
+
+        </li>
+
+
+
+      </script>
+
+
+
+    <script src="js/libs/jquery-min.js"></script>
+
+    <script src="js/libs/underscore-min.js"></script>
+
+    <script src="js/libs/backbone-min.js"></script>
+
+      
+
+    <script src="js/varer.js"></script>
+
+    <script src="js/checkout.js"></script>
+
+
+    <script type='application/javascript' src='js/fastclick.js'></script>
+    <script type="text/javascript">
+      window.addEventListener('load', function() {
+        new FastClick(document.body);
+      }, false);
+    </script>
+</body>
+
+</html>
+

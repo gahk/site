@@ -1,0 +1,72 @@
+<!DOCTYPE HTML>
+
+<!--
+This page is created by Theis F. Hinz in 2012-2013
+Visit www.theisfh.dk
+-->
+
+<html lang="da">
+	<? include("head.php"); ?>
+<link rel="stylesheet" type="text/css" hrf="<?=base_url("public/js/jqplot/jquery.jqplot.min.css")?>" />
+
+	<body>
+
+<div class="container">
+	<?
+		if($username != ""){
+			echo"<div id='adminmenu'>";
+				if($administrator == 1){
+					echo anchor('admin/useradm', 'Administrer brugere');
+					echo "&nbsp;&nbsp; | &nbsp;&nbsp;";
+				}
+
+				echo anchor('admin/logout', 'Log ud');
+			echo"</div>";
+		}
+	?>
+	<header class="adminheader">
+		<img class="logo" alt="" src="<?=base_url('public/image/elements/logo-k80.png')?>" />
+		<h5>Administration<h5>
+		<h1>G. A. Hagemanns Kollegium</h1>
+	</header>
+</div>
+	<nav>
+		<div class="container">
+
+		<?
+			//Find out which link which is clicked
+			for ($i = 1; $i <= 6; $i++) {
+				if($i == $menucat)
+					$menuItemClass[$i] = "selectedItem";
+				else
+					$menuItemClass[$i] = "";
+			}
+		?>
+			<ul>
+				<? if(isset($username) && isset($editpage) && $username != "" && $editpage == "1"): ?>
+					<li><?=anchor('page/edit/1', 'Hjem', array('class' => $menuItemClass[1]))?></li>
+					<li><?=anchor('page/edit/2', 'Faciliteter', array('class' => $menuItemClass[2]))?></li>
+					<li><?=anchor('page/edit/3', 'Kollegielivet', array('class' => $menuItemClass[3]))?></li>
+					<li><?=anchor('page/edit/4', 'Legater', array('class' => $menuItemClass[4]))?></li>
+					<li><?=anchor('page/edit/5', 'Pylon', array('class' => $menuItemClass[5]))?></li>
+					<li><?=anchor('page/edit/6', 'Optagelse', array('class' => $menuItemClass[6]))?></li>
+
+					<?	if(isset($editpage) && $editpage == 1): ?>
+						<!-- Makes seperator between, if needed -->
+						<li>&nbsp;&nbsp; | &nbsp;&nbsp;</li>
+					<? endif; ?>
+				<? endif;?>				
+
+					<?	if(isset($editpage) && $editpage == 1): ?>
+						<li>
+							<?= anchor('optagelse/listAnsoegninger', 'Indstilling') ?>
+						</ li>
+					<? endif; ?>
+			</ul>
+		</div>
+	</nav>
+
+	<!--Submenu -->
+	<?include("adminSubmenu.php"); ?>
+
+<div class="container row-fluid">

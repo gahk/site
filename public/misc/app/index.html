@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html manifest="manifest.appcache">
+<head>
+  <title>Alumnelisten</title>
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta charset="utf-8"  />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
+
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="application-name" content="Alumnelisten">
+  <meta name="apple-mobile-web-app-title" content="Alumnelisten">
+  <meta name="theme-color" content="#3F51B5">
+  <meta name="msapplication-navbutton-color" content="#3F51B5">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="msapplication-starturl" content="index.html">
+
+  <link defer rel="icon" sizes="192x192" href="launcher-icon-4x.png">
+  <link defer rel="apple-touch-icon" sizes="192x192" href="simple-logo.png">
+
+  <link defer rel="stylesheet" href="icon_font.css">
+  <link defer rel="stylesheet" href="material.indigo-pink.min.css">
+
+  <link defer rel="stylesheet" type="text/css" href="style.css">
+  <link rel="manifest" href="/public/misc/app/manifest.json">
+
+  <script type="application/javascript" src="fastclick.js"></script>
+  <script defer src="material.min.js"></script>
+  <script defer type="text/javascript" src="handlebars.min.js"></script>
+
+  <!--<script defer type="text/javascript" src="alumni.js"></script>-->
+
+</head>
+<body>
+
+  <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+    <header class="mdl-layout__header">
+        <div class="mdl-layout__header-row">
+          <!-- Title -->
+          <span class="mdl-layout-title" id="page-title">Alumnelisten</span>
+          <!-- Add spacer, to align navigation to the right -->
+          <div class="mdl-layout-spacer"></div>
+          <!-- Navigation. We hide it in small screens. -->
+          <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable
+                            mdl-textfield--floating-label mdl-textfield--align-right"
+               id="search-input">
+            <label class="mdl-button mdl-js-button mdl-button--icon"
+                   for="search-input-field">
+              <i class="material-icons">search</i>
+            </label>
+            <div class="mdl-textfield__expandable-holder">
+              <input class="mdl-textfield__input" type="text" name="sample"
+                     id="search-input-field">
+            </div>
+          </div>
+        </div>
+      </header>
+      
+      <div class="mdl-layout__drawer">
+        <span class="mdl-layout-title">Alumnelisten</span>
+        <nav class="mdl-navigation">
+          <a class="mdl-navigation__link" href="#list" id="list-link">
+          <i class="material-icons alum-btn-icon">person</i> Alumner
+          </a>
+          <a class="mdl-navigation__link" href="#clean" id="clean-link">
+          <i class="material-icons alum-btn-icon">home</i> Rengøringer
+          </a>
+          <a class="mdl-navigation__link" href="#work" id="work-link">
+          <i class="material-icons alum-btn-icon">group</i> Embedsgrupper
+          </a>
+          <a class="mdl-navigation__link" href="#" id="install-link" onclick="showInstallPage();">
+          <i class="material-icons alum-btn-icon">smartphone</i> Installer som app
+          </a>
+        </nav>
+      </div>
+      
+      <main class="mdl-layout__content page-container white" id="page-container">
+        <div id="spinner-wrapper"><div id="spinner-wrapper-inner">
+          <div class="mdl-spinner mdl-spinner--single-color mdl-js-spinner is-active" id="loading-spinner"></div>
+        </div></div>
+
+          <div class="page active" id="alumni-list-page">
+            <ul class="demo-list-two mdl-list alum-plist" id="alumni-list"></ul>
+          </div>
+
+          <div class="page" id="group-list-page">
+            <ul class="demo-list-two mdl-list alum-plist" id="group-list"></ul>
+
+            <!-- Colored FAB button with ripple -->
+            <a class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored close-btn" onclick="window.history.back();">
+              <i class="material-icons">close</i>
+            </a>  
+          </div>
+
+          <div class="page" id="clean-list-page">
+            <ul class="demo-list-two mdl-list alum-plist" id="clean-list"></ul>
+          </div>
+
+          <div class="page" id="work-list-page">
+            <ul class="demo-list-two mdl-list alum-plist" id="work-list"></ul>
+          </div>
+
+          <div class="page" id="alumni-page"></div>
+
+          <div class="page" id="install-page">
+            Tilføj Alumnelisten som app på din telefon, så du hurtigt kan tilgå den, også når du er offline. <br>
+            <br> 
+            <b>På iPhone og iPad</b><br>
+            Tryk på <img src="ios-installA.png" id="ios-install-img"> og vælg <img src="ios-installB.png" style="height: 24px;"> "<i>Føj til hjemmeskærm</i>".
+            <br>
+            <br>
+            <b>På Android</b><br>
+            Tryk på <img src="android-install.png" id="ios-install-img" style="border: 1px solid black;"> og vælg "<i>Install web app</i>".
+          </div>
+
+          <div id="connection-message" class="mdl-js-snackbar mdl-snackbar">
+            <div class="mdl-snackbar__text"></div>
+            <button class="mdl-snackbar__action" type="button"></button>
+          </div>
+      </main>
+  </div>
+
+  <script type="text/javascript">
+
+    if (window.location.href.match('http:')) {
+      window.location.href = window.location.href.replace('http', 'https');
+    }
+
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', function() {
+        navigator.serviceWorker.register('/public/misc/app/sw.js').then(function(registration) {
+          // Registration was successful
+          console.log('ServiceWorker registration successful with scope: ', registration.scope);
+        }).catch(function(err) {
+          // registration failed :(
+          console.log('ServiceWorker registration failed: ', err);
+        });
+      });
+    }
+
+    var pages = [];
+
+    var listData = {};
+    
+    function $(query) {
+      return document.querySelector(query);
+    }
+
+    onload = function() {
+      new FastClick(document.body);
+
+      pages.push({ div: $("#alumni-list-page"), searchable: true, title: "Alumnelisten", white: true });
+      pages.push({ div: $("#group-list-page"), searchable: false, title: "Group", white: true });
+      pages.push({ div: $("#alumni-page"), searchable: false, title: "Alumne", white: false});
+      pages.push({ div: $("#clean-list-page"), searchable: false, title: "Rengøringer", white: true});
+      pages.push({ div: $("#work-list-page"), searchable: false, title: "Embedsgrupper", white: true});
+      pages.push({ div: $("#install-page"), searchable: false, title: "Installer", white: true});
+
+      if ("alumni" in listData) {
+        populateList();
+      }
+
+      $("#search-input-field").addEventListener("input", populateList);
+
+      navigateHash();
+
+      loadData();
+    }
+
+    window.onhashchange = navigateHash;
+    var cancelNavigation = false;
+    function navigateHash() {
+      if (!("alumni" in listData)) return;
+      if (cancelNavigation) {
+        cancelNavigation = false;
+        return;
+      }
+
+      let idStr = location.hash.substr(2);
+      let idPresent = /^\d+$/.test(idStr);
+
+      parseListData();
+
+      if (location.hash.length <= 1) {
+        showList();
+      } else if (location.hash == "#list") {
+        showList();
+      } else if (location.hash == "#clean") {
+        showCleanings();
+      } else if (location.hash == "#work") {
+        showWorkGroups();
+      } else if (idPresent && location.hash.charAt(1) == "c") {
+        showGroup(listData.cleanings[parseInt(idStr)]);
+      } else if (idPresent && location.hash.charAt(1) == "w") {
+        showGroup(listData.workGroups[parseInt(idStr)]);
+      } else {
+        let id = location.hash.replace('#', '');
+        showAlumniById(id);
+      }
+
+      hideDrawer();
+      updateLinkColors();
+    }
+
+    function updateLinkColors() {
+      if (location.hash.length <= 1 ||
+          location.hash == "#list") {
+        $("#list-link").classList.add("active-page");
+      } else {
+        $("#list-link").classList.remove("active-page");
+      }
+
+      if (location.hash.substr(0, 2) === "#c") {
+        $("#clean-link").classList.add("active-page");
+      } else {
+        $("#clean-link").classList.remove("active-page");
+      }
+
+      if (location.hash.substr(0, 2) === "#w") {
+        $("#work-link").classList.add("active-page");
+      } else {
+        $("#work-link").classList.remove("active-page");
+      }
+
+      $("#install-link").classList.remove("active-page");
+    }
+
+    function compareByName(objA, objB) {
+      return objA.name.localeCompare(objB.name);
+    }
+
+    function parseListData() {
+      if (!("alumni" in listData)) return;
+      if ("cleanings" in listData) return;
+
+      listData.cleanings = [];
+      listData.workGroups = [];
+
+      listData.alumni.forEach(function(alumni) {
+        let cleaning = null;
+        let workGroup = null;
+
+        listData.cleanings.forEach(function(curClean) {
+          if (curClean.name === alumni.cleaning) {
+            cleaning = curClean;
+          }
+        });
+
+        listData.workGroups.forEach(function(curWork) {
+          if (curWork.name === alumni.workGroup) {
+            workGroup = curWork;
+          }
+        });
+
+        if (cleaning === null) {
+          cleaning = { name: alumni.cleaning, alumni: []};
+          listData.cleanings.push(cleaning);
+        }
+
+        if (workGroup === null) {
+          workGroup = { name: alumni.workGroup, alumni: []};
+          listData.workGroups.push(workGroup);
+        }
+
+        cleaning.alumni.push(alumni);
+        workGroup.alumni.push(alumni);
+      });
+
+      listData.cleanings.sort(compareByName);
+      listData.workGroups.sort(compareByName);
+
+      for (var i = 0; i < listData.cleanings.length; i++) {
+        listData.cleanings[i].id = i;
+      }
+
+      for (var i = 0; i < listData.workGroups.length; i++) {
+        listData.workGroups[i].id = i;
+      }
+    }
+
+    var cleaningsReady = false;
+    function populateCleanings() {
+      if (cleaningsReady) return;
+      cleaningsReady = true;
+
+      parseListData();
+
+      let listTemplate = Handlebars.compile($("#clean-list-template").innerHTML);
+      let listHTML = listTemplate(listData);
+
+      $("#clean-list").innerHTML = listHTML;
+    }
+
+    var workGroupsReady = false;
+    function populateWorkGroups() {
+      if (workGroupsReady) return;
+      workGroupsReady = true;
+
+      parseListData();
+
+      let listTemplate = Handlebars.compile($("#work-list-template").innerHTML);
+      let listHTML = listTemplate(listData);
+
+      $("#work-list").innerHTML = listHTML;
+    }
+
+    function populateList() {
+      let filter = $("#search-input-field").value;
+      let alumni = listData.alumni;
+
+      if (filter !== "") {
+        alumni = filterList(alumni, filter);
+      }
+
+      let listTemplate = Handlebars.compile($("#alumni-list-template").innerHTML);
+      let listHTML = listTemplate({alumni: alumni});
+
+      hideLoader();
+
+      $("#alumni-list").innerHTML = listHTML;
+    }
+
+    function populateGroup(group) {
+      let listTemplate = Handlebars.compile($("#alumni-list-template").innerHTML);
+      let listHTML = listTemplate(group);
+
+      hideLoader();
+
+      $("#group-list").innerHTML = listHTML;
+    }
+
+    function filterList(alumni, query) {
+      let filteredAlumni = [];
+      let lquery = query.toLowerCase();
+
+      alumni.forEach(function(alumnum) {
+        if (alumnum.name.toLowerCase().includes(lquery)) {
+          filteredAlumni.push(alumnum);
+        }
+      });
+
+      return filteredAlumni;
+    }
+
+    function toggleDrawer() {
+      $(".mdl-layout").MaterialLayout.toggleDrawer();
+    }
+
+    function hideDrawer() {
+      let layout = $(".mdl-layout");
+      if (layout != null && "MaterialLayout" in layout &&
+          layout.MaterialLayout.drawer_.classList.contains("is-visible")) {
+        toggleDrawer();
+      }
+    }
+
+    function showList() {
+      populateList();
+      showPage("alumni-list-page");
+    }
+
+    function showCleanings() {
+      populateCleanings();
+      showPage("clean-list-page");
+    }
+
+    function showWorkGroups() {
+      populateWorkGroups();
+      showPage("work-list-page");
+    }
+
+    function showInstallPage() {
+      cancelNavigation = true;
+
+      showPage("install-page");
+      hideDrawer();
+
+      $("#list-link").classList.remove("active-page");
+      $("#clean-link").classList.remove("active-page");
+      $("#work-link").classList.remove("active-page");
+
+      $("#install-link").classList.add("active-page");
+    }
+
+    function showGroup(group) {
+      populateGroup(group);
+
+      showPage("group-list-page");
+
+      setPageTitle(group.name);
+    }
+
+    function showAlumniById(id) {
+      listData.alumni.forEach(function(alumni) {
+        if (alumni.id == id) {
+          showAlumni(alumni);
+        }
+      });
+    }
+
+    function showAlumni(alumni) {
+      let alumniTemplate = Handlebars.compile($("#alumni-template").innerHTML);
+      let alumniHTML = alumniTemplate(alumni);
+
+      $("#alumni-page").innerHTML = alumniHTML;
+
+      showPage("alumni-page");
+
+      setPageTitle(alumni.name)
+    }
+
+    function resetSearch() {
+      $("#search-input-field").value = "";
+    }
+
+    function showLoader() {
+      $("#loading-spinner").classList.remove("done");
+    }
+
+    function hideLoader() {
+      $("#spinner-wrapper").classList.add("done");
+    }
+
+    function setSearchable(searchable) {
+      if (searchable) {
+        $("#search-input").classList.remove("hidden");
+      } else {
+        $("#search-input").classList.add("hidden");
+      }
+    }
+
+    function setWhitePage(white) {
+      if (white) {
+        $("#page-container").classList.add("white");
+      } else {
+        $("#page-container").classList.remove("white");
+      }
+    }
+
+    function setPageTitle(title) {
+      $("#page-title").innerText = title;
+    }
+
+    function showPage(pageName) {
+      resetSearch(); 
+
+      pages.forEach(function(page) {
+        if (page.div.id != pageName) {
+          page.div.classList.remove("active");
+        } else {
+          setSearchable(page.searchable);
+          setWhitePage(page.white);
+          setPageTitle(page.title);
+        }
+      })
+
+      $(".page-container").scrollTop = 0;
+
+      $("#" + pageName).classList.add("active");
+    }
+
+    function loadData() {
+      loadDataFromLocalStorage();
+
+      setTimeout(loadDataFromServer, 0);
+    }
+
+    function loadDataFromLocalStorage() {
+      let listJSON = localStorage.getItem("listData");
+      if (listJSON === null) return;
+
+      updateData(listJSON);
+    }
+
+    function loadDataFromServer() {
+      let req = new XMLHttpRequest();
+      req.overrideMimeType("application/json");
+
+      req.onreadystatechange = function () {
+        if (req.readyState === 4) {
+          if (req.status == "200") {
+            // Success
+            updateData(req.responseText);
+
+            localStorage.setItem("listData", req.responseText);
+          } else {
+            // Failure
+            if (!("alumni" in listData)) {
+              $("#connection-message").MaterialSnackbar.showSnackbar({
+                message: "Kan ikke hente alumner. Du skal være forbundet til gahkwifi for at hente data.",
+                timeout: 6000,
+                actionHandler: loadDataFromServer,
+                actionText: "Prøv igen"
+              });
+            }            
+          }
+        }
+      }
+
+      req.open("GET", "/nyintern/alumneliste/json", true);
+      req.send();
+    }
+
+    function updateData(json) {
+      let newList = JSON.parse(json);
+
+      // Update the view if we had no alumni beforehand
+      let update = !("alumni" in listData);
+
+      listData = newList;
+      parseListData();
+
+      if (update) { 
+        navigateHash();
+        hideLoader();
+      }
+    }
+
+  </script>
+
+  <script type="text/x-handlebars-template" id="alumni-list-template">
+    {{#each alumni}}
+    <li class="mdl-list__item mdl-list__item--two-line alum-litem">
+      <a class="mdl-js-button alum-llink" href="#{{id}}">
+      <span class="mdl-list__item-primary-content alum-llink-span">
+        <span class="alum-llink-name">{{name}}</span>
+        <span class="mdl-list__item-sub-title">{{phone}} - {{workGroup}} - {{cleaning}}</span>
+      </span>
+      </a>
+    </li>
+    {{/each}}
+  </script>
+
+  <script type="text/x-handlebars-template" id="clean-list-template">
+    {{#each cleanings}}
+    <li class="mdl-list__item alum-litem">
+      <a class="mdl-js-button alum-llink" href="#c{{id}}">
+      <span class="mdl-list__item-primary-content alum-llink-span">
+        <span class="mdl-list__item-primary-content alum-llink-name">{{name}}</span>
+      </span>
+      </a>
+    </li>
+    {{/each}}
+  </script>
+
+  <script type="text/x-handlebars-template" id="work-list-template">
+    {{#each workGroups}}
+    <li class="mdl-list__item alum-litem">
+      <a class="mdl-js-button alum-llink" href="#w{{id}}">
+      <span class="mdl-list__item-primary-content alum-llink-span">
+        <span class="mdl-list__item-primary-content alum-llink-name">{{name}}</span>
+      </span>
+      </a>
+    </li>
+    {{/each}}
+  </script>
+
+  <script type="text/x-handlebars-template" id="alumni-template">
+    <div class="mdl-card mdl-shadow--2dp alum-card">
+      <div class="mdl-card__supporting-text alum-card-body">
+        <a class="mdl-button mdl-js-button mdl-js-ripple-effect alum-btn" 
+            href="tel:{{phone}}" style="padding-bottom: 8px;">
+          <i class="material-icons alum-btn-icon">phone</i> {{phone}}
+        </a> <br>
+        <a class="mdl-button mdl-js-button mdl-js-ripple-effect alum-btn" 
+           href="mailto:{{email}}" style="padding-top: 8px;" >
+          <i class="material-icons alum-btn-icon">email</i> {{email}}
+        </a>
+      </div>
+    </div>
+
+    <div class="mdl-card mdl-shadow--2dp alum-card">
+      <div class="mdl-card__supporting-text alum-card-body">
+        <div class="alum-prop">
+          <span class="alum-prop-name">embedsgruppe</span>
+          <span class="alum-prop-text">{{workGroup}}</span>
+        </div>
+        <div class="alum-prop">
+          <span class="alum-prop-name">rengøring</span>
+          <span class="alum-prop-text">{{cleaning}}</span>
+        </div>
+        <div class="alum-prop">
+          <span class="alum-prop-name">fylgje</span>
+          <span class="alum-prop-text">{{parent}}</span>
+        </div>
+        <div class="alum-prop">
+          <span class="alum-prop-name">værelse</span>
+          <span class="alum-prop-text">{{room}}</span>
+        </div>
+        <div class="alum-prop">
+          <span class="alum-prop-name">fødselsdag</span>
+          <span class="alum-prop-text">{{birthday}}</span>
+        </div>
+        <div class="alum-prop">
+          <span class="alum-prop-name">indflyttet</span>
+          <span class="alum-prop-text">{{moveInDate}}</span>
+        </div>
+        <div class="alum-prop">
+          <span class="alum-prop-name">studie</span>
+          <span class="alum-prop-text">{{study}}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Colored FAB button with ripple -->
+    <a class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored close-btn" onclick="window.history.back();">
+      <i class="material-icons">close</i>
+    </a>
+  </script>
+
+</body>
+</html>

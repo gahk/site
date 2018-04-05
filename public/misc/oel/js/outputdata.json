@@ -1,0 +1,13 @@
+POST http://gahk.dk/nyintern/oelkaelder/purchase
+
+{
+  "shoppers": [ 36 ],
+  "date": "2016-07-18 17:18",
+  "items": [
+    {
+      "productId": 3,
+      "quantity": 1,
+      "price": 1900
+    }
+  ]
+}

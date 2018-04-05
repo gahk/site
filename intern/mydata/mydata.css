@@ -1,0 +1,52 @@
+fieldset {
+  width: 550px;
+  border: 1px solid black;
+  padding: 5px;
+}
+
+input{
+	margin: 2px;
+}
+
+legend {
+	font-weight: bold;
+}
+
+div.contentBlockContainer{
+	float: left;
+	width: 1300px;
+        padding-bottom: 30px;
+}
+
+div.contentBlock {
+	float: left;
+	width: 600px;
+}
+
+div.box {
+	background: #99D9EA;
+	margin-left: 5px;
+	margin-right: 5px;
+	
+}
+
+div.boxContent {
+	position: relative;
+	padding: 5px;
+	height: 200px;
+	overflow-x: hidden;
+	overflow-y: scroll;
+/*	font-weight: bold;*/
+/*	border: 1px solid black;*/
+}
+
+td {
+	padding: 3px;
+}
+th {
+	padding: 3px;
+}
+
+input{
+	margin: 2px;
+}

@@ -1,0 +1,33 @@
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ * Form setup
+ */
+
+label {
+  float:left;
+  width:100px;
+
+  margin-right:0.5em;
+/*  padding-top:0.2em;*/
+  text-align:right;
+}
+
+legend {
+	font-weight: bold;
+}
+
+fieldset {
+  width: 700px;
+}
+
+select{
+	margin: 2px;
+}
+
+input{
+	margin: 2px;
+}
+
+form{
+	 margin: 0px;
+	 padding: 0px;
+}

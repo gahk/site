@@ -1,0 +1,24 @@
+<head>
+	<script type="text/javascript" src="<?=base_url('public/js/lightbox/jquery.lightbox-0.5.pack.js')?>"></script>
+	<link rel="stylesheet" type="text/css" href="<?=base_url('public/js/lightbox/jquery.lightbox-0.5.css')?>" />  
+	<script>
+		$(function() {
+			$('#standartPage a').lightBox({fixedNavigation:true});
+		});
+	</script>
+</head>
+
+<!-- Standart text page -->
+<div class="contentBox mediumSizeBox" id="standartPage">
+	<div class="transparency"></div>
+	<div class="content">
+
+	<h3><?=$news[0]->title?> 
+		<small><?=$news[0]->day?>. <?=$months[$news[0]->month-1]?> <?=$news[0]->year?></small>
+	</h3>
+	<p><?=$news[0]->text?></p>
+
+<?php $this->load->view('layout/footer');?>
+	</div>
+</div>
+

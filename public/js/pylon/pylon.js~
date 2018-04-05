@@ -1,0 +1,8 @@
+$(function() {
+	$( "#pylonCalendar tr" ).click(function(){
+		$("#pylonCalendar tr:odd").hide();
+		$(".trSelected").removeClass("trSelected");
+		$(this).addClass("trSelected");
+		$(this).next('tr:hidden').show();
+	});
+});

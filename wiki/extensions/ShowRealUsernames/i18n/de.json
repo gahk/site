@@ -1,0 +1,10 @@
+{
+    "@metadata": {
+	"authors": [
+	    "Kghbln",
+	    "RV1971"
+	]
+    },
+    "right-showrealname": "B&uuml;rgerliche Namen sehen in der [[Special:ListUsers|Benutzerliste]]",
+    "sru-realname-desc": "Erweitert die Spezialseite [[Special:ListUsers]] um die Anzeige der b&uuml;rgerlichen Namen und/oder weiterer Daten der Benutzer"
+}

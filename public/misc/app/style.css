@@ -1,0 +1,158 @@
+a {
+  color: black;
+  text-decoration: none;
+}
+
+a.mdl-js-ripple-effect { position: relative; }
+
+ul.alum-plist {
+  margin: 0px;
+  padding: 0px;
+  background-color: white;
+}
+
+li.alum-litem {
+  padding: 0px;
+  border-bottom: 1px solid #DDD;
+}
+
+a.alum-llink {
+  padding: 16px; 
+  width: 100%;
+  display: inline-block;
+  font-family: Helvetica, Arial, sans-serif;
+  font-weight: normal;
+}
+
+.alum-llink-span {
+  height: auto !important;
+}
+
+.alum-llink-name {
+  font-size: 18px;
+  font-weight: normal;
+  font-family: Helvetica, Arial, sans-serif;
+}
+
+#spinner-wrapper-inner {
+  display: inline-block;
+}
+
+#spinner-wrapper {
+  display: block;
+  margin-top: 20px;
+  text-align: center;
+  /*margin-left: auto;*/
+  /*margin-right: auto;*/
+  /*width: 29px;*/
+}
+
+#loading-spinner {
+}
+
+#spinner-wrapper.done {
+  display: none;
+}
+
+.page {
+  display: none;
+  width: 100%;
+  height: 100%;
+}
+
+.page.active {
+  display: block
+}
+
+.hidden {
+  display: none;
+}
+
+.page-container {
+  background-color: #E1E1E1;
+}
+
+.page-container.white {
+  background-color: white;
+}
+
+#ios-install-img {
+  height: 29px;
+  border: 1px solid #EEE;
+  margin-top: 7px;
+  position: relative;
+  top: -5px;
+}
+
+#install-page {
+  padding: 16px;
+  box-sizing: border-box;
+}
+
+#alumni-page {
+  padding: 12px;
+  box-sizing: border-box;
+}
+
+.alum-card {
+  width: 100%;
+  box-sizing: border-box;
+  min-height: 50px;
+  margin-bottom: 12px;
+}
+
+.alum-card-body {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 8px 0px 8px 0px;
+}
+
+.alum-btn {
+  width: 100%;
+  box-sizing: border-box;
+  text-align: left;
+  font-size: 23px;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  word-break: break-all;
+  text-transform: none;
+  height: auto;
+  min-height: 36px;
+  padding: 16px 24px;
+  font-family: Helvetica, Arial, sans-serif;
+  font-weight: normal;
+}
+
+.alum-btn-icon {
+  padding-right: 5px;
+  width: 24px;
+  height: 24px
+}
+
+.alum-prop-name {
+  display: block;
+  margin-left: 3px;
+  color: #757575;
+  font-size: small;
+}
+
+.alum-prop-text {
+  display: block;
+  color: black;
+  font-size: 23px;
+}
+
+.alum-prop {
+  margin: 16px 24px;
+}
+
+.close-btn {
+  position: fixed !important;
+  right: 16px;
+  bottom: 10px;
+  z-index: 1000;
+}
+
+.active-page {
+  color: rgb(255,64,129) !important;
+}

@@ -1,0 +1,9 @@
+ErrorDocument 404 "Denne side eksisterer ikke."
+
+AuthName "Bruger-id: gahk"
+AuthUserFile /customers/c/6/8/gahk.dk/httpd.www/intern/telefonliste/.htpasswd
+AuthType Basic
+
+<Limit GET POST PUT>
+require user gahk
+</Limit>

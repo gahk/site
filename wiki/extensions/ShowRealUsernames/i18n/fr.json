@@ -1,0 +1,9 @@
+{
+    "@metadata": {
+	"authors": [
+	    "RV1971"
+	]
+    },
+    "right-showrealname": "Voir les noms r&eacute;els des utilisateurs sur la [[Special:ListUsers|liste des utilisateurs]]",
+    "sru-realname-desc": "Ajoute les noms r&eacute;els des utilisateurs et/ou &eacute;ventuellement d'autres donn&eacute;es personnelles &agrave; la page [[Special:ListUsers]]"
+}

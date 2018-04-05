@@ -1,0 +1,20 @@
+<head>
+	<style>
+		<script type="text/javascript" src="<?=base_url('public/js/lightbox/jquery.lightbox-0.5.pack.js')?>"></script>
+		<link rel="stylesheet" type="text/css" href="<?=base_url('public/js/lightbox/jquery.lightbox-0.5.css')?>" />  
+		<script>
+			$(function() {
+				$('#news_box a').lightBox({fixedNavigation:true});
+			});
+		</script>
+	</style>
+</head>
+
+<div class="contentBox smallSecondBox" id="news_box">
+	<div class="transparency"></div>
+	<div class="content">
+
+	<iframe id="frameBox" src="<?=site_url('news/listBox');?>" scrolling="no" style="width: 100%; border: 0px;"></iframe>
+
+	</div>
+</div>

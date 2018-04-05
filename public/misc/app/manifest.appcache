@@ -1,0 +1,27 @@
+CACHE MANIFEST
+# v26
+# This is another comment
+index.html
+style.css
+launcher-icon-4x.png
+simple-logo.png
+handlebars.min.js
+launcher-icon-1x.png
+material.indigo-pink.min.css
+launcher-icon-2x.png
+material.min.js
+fastclick.js
+icon_font.css
+icon_font.woff2
+ios-installA.png
+ios-installB.png
+android-install.png
+
+
+# Use from network if available
+NETWORK:
+*
+
+# Fallback content
+FALLBACK:
+

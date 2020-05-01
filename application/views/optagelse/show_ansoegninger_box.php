@@ -69,6 +69,13 @@
 	</tr>
 	<?endif;?>
 
+	<?if($ansoegning[0]->yearleft):?>
+	<tr>
+		<td>Studieår tilbage:</td>
+		<td><?=$ansoegning[0]->yearleft?></td>
+	</tr>
+	<?endif;?>
+
 	<?if($ansoegning[0]->university):?>
 	<tr>
 		<td>Universitet:</td>

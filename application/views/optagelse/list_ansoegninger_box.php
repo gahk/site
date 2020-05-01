@@ -29,7 +29,7 @@
 	<h1  class="page-header">Ansøgninger</h1>
 	<ol class="breadcrumb">
     <li>
-        <i class="fa fa-list"></i>  Ansoegnings overblik
+        <i class="fa fa-list"></i>  Ansøgnings overblik
     </li>
 </ol>
 	

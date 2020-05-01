@@ -27,21 +27,14 @@ class GahkAuthLogin extends AuthPlugin {
 			$password="keldogfrederik";
 			$database="gahk_dk";
 
-			$handle = mysql_connect('localhost',$username,$password);
-			mysql_select_db($database, $handle);
-			$result = mysql_query($query);
-			if (!$result) {
-				die('Invalid query: ' . mysql_error());
-			} else {
-				if(1 == mysql_num_rows($result)) {
+			$handle = mysqli_connect('localhost',$username,$password,$database);
+			if ($result = mysqli_query($handle, $query)) {
+				if(1 == mysqli_num_rows($result)) {
 					return true;
-				} else if(0 == mysql_num_rows($result)) {
-
 				}
+			} else {
+				die('Invalid query: ' . mysqli_error($handle));
 			}
-
-
-
 			return false;
         }
 
@@ -90,23 +83,20 @@ class GahkAuthLogin extends AuthPlugin {
 		$password="keldogfrederik";
 		$database="gahk_dk";
 
-		$handle = mysql_connect('localhost',$username,$password);
-
+		$handle = mysqli_connect('localhost',$username,$password,$database);
 		if($handle){
-			mysql_select_db($database, $handle);
-			$result = mysql_query($query);
-			if (!$result) {
-				die('Invalid query: ' . mysql_error());
-			} else {			
-				if(1 == mysql_num_rows($result)) {
-					$u = mysql_fetch_array($result);
+			if ($result = mysqli_query($handle, $query)) {
+				if(1 == mysqli_num_rows($result)) {
+					$u = mysqli_fetch_array($result);
 					$user->setRealName($u['firstName'] . " " . $u['lastName']);
 					$user->saveSettings();
 					return true;
-				} else if(0 == mysql_num_rows($result)) {
+				} else if (1 == mysqli_num_rows($result)) {
 					die("Empty Query");
-					return false;		
+					return false;
 				}
+			} else {
+				die('Invalid query: ' . mysqli_error($handle));
 			}
 		}else{
 			die("NEJ NEJ NEJ");

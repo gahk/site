@@ -13,7 +13,6 @@ class Alumneliste extends MY_Controller {
 
 	public function index(){
 		$username = $this->session->userdata('username');
-		
 		if(!$username && !insideGAHK()){
 			$this->session->set_flashdata('redirectToUrlAfterLogin', current_url());
 			redirect("nyintern/admin");

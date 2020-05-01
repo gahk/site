@@ -1,5 +1,5 @@
 ﻿<div class="menu">
-    <ul>
+<!--    <ul>
         <li><a href="http://gahk.dk/intern/classic.php" >Start</a></li>
 
         <li><a href="http://gahk.dk/intern/alumneliste/" >Alumneliste</a>
@@ -19,9 +19,9 @@
                 <li><a href="http://gahk.dk/intern/kvotient/seAnsoeningerLogin.php">Indsendte ansøgninger</a></li>
                 <li><a href="http://gahk.dk/intern/kvotient/adminAnsoegninger.php">Administrer ansøgninger</a></li>
                 <li><a href="http://gahk.dk/intern/kvotient/plantegning.php">Plantegning</a></li>
-         </ul>-->
+         </ul>
         </li>
-		
+
         <li><a href="http://gahk.dk/intern/handbook/index.php?id=11" >Håndbog</a>
             <ul>
                 <li><a href="http://gahk.dk/intern/handbook/admin.php" >Administrer</a></li>
@@ -35,14 +35,14 @@
 			<ul>
 				<li><a href="http://gahk.spreadshirt.dk/" target="_blank">Gå til Shirt-shop</a></li>
 			</ul>
-		</li>-->
-			
+		</li>
+
 <!--		<li><a href="http://gahk.dk/intern/druk/" >Druk</a>
 			<ul>
 				<li><a href="http://gahk.dk/intern/druk/klub100.swf" target="_blank">Klub 100</a></li>
 				<li><a href="http://gahk.dk/intern/druk/Drukhjulet.swf" target="_blank">Lykkehjulet</a></li>
 			</ul>
-		</li>-->
+		</li>
 
         <li><a href="http://gahk.dk/intern/rengoering/">Rengøringer</a>
             <ul>
@@ -61,10 +61,10 @@
                 <li><a href="http://gahk.dk/intern/printer/HPM4555.php">HP printer - Windows</a></li>
 				<li><a href="http://gahk.dk/intern/printer/HPM4555mac.php">HP printer - Mac</a></li>
                 <li><a href="http://gahk.dk/intern/printer/canonWin.php">Canon printer - Windows</a></li>
-                <!--<li><a href="http://gahk.dk/intern/printer/winxp.php">Windows XP</a></li>-->
-                <!--<li><a href="http://gahk.dk/intern/printer/win7.php">Windows 7 (og måske Vista)</a></li>-->
+                <!--<li><a href="http://gahk.dk/intern/printer/winxp.php">Windows XP</a></li>
+                <!--<li><a href="http://gahk.dk/intern/printer/win7.php">Windows 7 (og måske Vista)</a></li>
                 <li><a href="http://gahk.dk/intern/printer/duplex.php">Windows - Print på begge sider</a></li>
-                <!--<li><a href="http://gahk.dk/intern/printer/printermac.pdf">MAC (PDF-fil)</a></li>-->
+                <!--<li><a href="http://gahk.dk/intern/printer/printermac.pdf">MAC (PDF-fil)</a></li>
             </ul>
         </li>
 
@@ -76,16 +76,16 @@
                 <li><a href="http://gahk.dk/intern/gahkhjerne/gahkhjernemac.pdf">MAC (PDF-fil)</a></li>
             </ul>
         </li>
-		
+
 <!--		<li><a href="http://gahk.dk/intern/pylon/index.php">Pylon</a>
 			<ul>
 				<li><a href="http://gahk.dk/intern/pylon/pylonSignup.php">Tilmeld mailingliste</a></li>
 			</ul>
-		</li>-->
+		</li>
 
         <li><a href="http://gahk.dk/intern/andet/" >Andet</a>
             <ul>
-				<!--<li><a href="http://gahk.dk/intern/gahki/" >GAHKI</a></li>-->
+				<!--<li><a href="http://gahk.dk/intern/gahki/" >GAHKI</a></li>
 				<li><a href="http://gahk.dk/intern/andet/DEN-GYLDNE-BOG-Rumstationen.pdf">Den Gyldne Bog</a></li>
 				<li><a href="http://gahk.dk/intern/andet/GahkPakken.pdf">GAHK-pakken</a></li>
                 <li><a href="http://gahk.dk/intern/andet/GahkFremlejekontrakt.pdf">Fremlejekontrakt</a></li>
@@ -104,8 +104,8 @@
                 <li><a href="http://gahk.dk/intern/mydata/findMacAddressMAC.php">MAC - Find MAC-adresser</a></li>
                 <li><a href="http://gahk.dk/intern/mydata/index.php?admin=1">Log ind - Netværksgruppen</a></li>
                 <li><a href="http://192.168.0.30/nagios3/">Netværksgruppen - Status</a></li>
-                
+
             </ul>
         </li>
-    </ul>
+    </ul> -->
 </div>

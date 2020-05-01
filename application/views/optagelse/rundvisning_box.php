@@ -1,6 +1,5 @@
 <script type="text/javascript" src="<?=base_url('public/js/optagelse/maxlengthtextarea.js')?>"></script>
 <script>
-
 	//Changes label for studieretning if University is "Andet"
 	$(function() {
 			$("#universityInput").change(function(){
@@ -20,7 +19,7 @@
 	<div class="transparency"></div>
 	<div class="content">
 
-		<h3>Book en rundvisning</h3>
+		<h3>Anmod om en rundvisning</h3>
 		Inden du kan søge optagelse vil vi gerne vise dig hvor vi bor.<br /><br />
 
 		<?php 
@@ -28,11 +27,9 @@
 				echo "
 					<div class='alert alert-error'>
 					De markerede felter skal udfyldes.";
-
 				if(form_error('recaptcha_response_field')!=''){
 					echo "<br /> Du indtastede ikke bogstaverne i feltet korrekt. Prøv igen.";
 				}
-
 				echo"</div>";
 			}
 			if($success){
@@ -70,6 +67,10 @@
 				<div class="span7">
 					<label for="inputEmail">Hvor længe har du studeret: <h4>*</h4></label>
 					<input type="text" name="studyyear" class="<?=form_error('studyyear')!=''? 'error': ''?> form-control" placeholder="Antal år" style="width: 100%;" value="<?=set_value('studyyear')?>">
+				</div>
+                <div class="span7">
+					<label for="inputEmail">Hvor længe har du tilbage på studiet: <h4>*</h4></label>
+					<input type="text" name="yearleft" class="<?=form_error('yearleft')!=''? 'error': ''?> form-control" placeholder="Antal år" style="width: 100%;" value="<?=set_value('yearleft')?>">
 				</div>
 			</div>
 
@@ -132,4 +133,3 @@
 
 	</div>
 </div>
-

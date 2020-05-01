@@ -178,6 +178,36 @@ class Oelkaelder extends MY_Controller {
 		
 		$this->showInternPage('intern/oelkealderallsales', $data);
 	}
+	
+	public function allsalesoverview($startItem = 0, $lowerAmount = 0) {
+		$username = $this->session->userdata('username');
+		$oelkaelder = $this->session->userdata('oelkaelder');
+
+		if (!$username && !$oelkaelder) {
+			$this->session->set_flashdata('redirectToUrlAfterLogin', current_url());
+			redirect("nyintern/admin");
+			return;
+		}
+
+		if (!$oelkaelder) {
+			// We only allow oelkaelder people to see others overview
+			redirect("nyintern");
+			return;
+		}
+
+		$transactions = $this->Oelkaelder_model->getTransactionOverview($startItem, 30, $lowerAmount * 100);
+
+		$data['pagename'] = "oelkaelder";
+		$data['pageheader'] = "Ølkælderen";
+		$data['transactions'] = $transactions;
+		$data['lowerAmount'] = $lowerAmount;
+		$data['overview'] = $overview;
+		$data['startItem'] = $startItem;
+		$data['endItem'] = $startItem + 30;
+		$data['prevItem'] = max($startItem - 30, 0);
+		
+		$this->showInternPage('intern/oelkealderallsales', $data);
+	}
 
 	public function deactivate($shopperId) {
 		$username = $this->session->userdata('username');
@@ -310,6 +340,31 @@ class Oelkaelder extends MY_Controller {
 		
 		return $this->load->view('intern/oelkaeldersales', $data, false);
 	}
+	
+	public function saleReportQuantity() {
+		$username = $this->session->userdata('username');
+		$oelkaelder = $this->session->userdata('oelkaelder');
+		
+		if (!$oelkaelder) {
+			redirect("nyintern/oelkaelder/overview");
+			return;
+		}
+
+		if (empty($_POST['startdate'])) {
+			redirect("nyintern/oelkaelder/admin");
+			return;
+		}
+
+		$startdate = $_POST['startdate'];
+		$enddate = $_POST['enddate'];
+
+		$data['sales'] = $this->Oelkaelder_model->getSaleQuantity($startdate, $enddate);
+
+		$data['startdate'] = $startdate;
+		$data['enddate'] = $enddate;
+		
+		return $this->load->view('intern/oelkaeldersalesquantity', $data, false);
+	}
 
 	public function addShopper() {
 		$username = $this->session->userdata('username');
@@ -438,15 +493,15 @@ class Oelkaelder extends MY_Controller {
 	public function upload() {
 		$config['upload_path']          = './public/image/intern/oel';
 		$config['allowed_types']        = 'jpg|png';
-		$config['max_size']             = 10000;
-		$config['max_width']            = 1024;
-		$config['max_height']           = 1024;
+		$config['max_size']             = 100;
+		$config['max_width']            = 400;
+		$config['max_height']           = 400;
 
 		$this->load->library('upload', $config);
 
 		if ( ! $this->upload->do_upload('userfile'))
 		{
-		    var_dump($this->upload->display_errors());
+		    var_dump($this->upload->display_errors('<p>', '</p>'));
 		}
 		else
 		{

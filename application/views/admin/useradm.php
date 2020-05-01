@@ -15,6 +15,23 @@
       }).autocomplete({source:'alumneSearch/', minLength:2});
   });
   </script>
+  <script>
+  $(document).ready(function(){
+    $('#mailButton').click(function(){
+		if (confirm("Sikker? Mails vil blive sendt til hele kollegiet!")) {
+			$.ajax({
+				type: "POST",
+				url: "<?=base_url('/admin/sendMail/')?>",
+				data: "",
+				cache: false,
+				success: function(result){
+					alert(result);
+				}
+			});
+		}
+    });
+});
+  </script>
 </head>
 
 <div class="contentBox mediumSizeBox">
@@ -67,7 +84,7 @@ For at en alumne kan få adgang, skal personen være registreret på gahk intern
 
 <br /><br />
 <h3>Alle administrator-brugere</h3>
-
+<a style="float: right;" href="<?=base_url('index.php/admin/addAllUserAdm')?>">Opdater fra GAHK Intern</a>
 	<table class="table table-striped">
 		<thead>
 			<th>Navn</th>
@@ -107,9 +124,14 @@ For at en alumne kan få adgang, skal personen være registreret på gahk intern
 					<?endif;?>
 				</td>
 			</tr>
-		<? endforeach; ?>		
+		<? endforeach; ?>
 		</tbody>
 	</table>
+<h3>Send email</h3>
+<p>Send mails us til alle embedsgrupperne, og informer om at deres mails er blevet ændret. Husk at sætte viderestilling op på one.com først.
+<br/>Rækken af 1/0 taller er booleans for alle de sendte mails.</p>
+<button id="mailButton" class="button btn" type="submit"><i class="icon-ok"></i>Send emails</button>
+
 
 <?php $this->load->view('layout/footer');?>
 </div>

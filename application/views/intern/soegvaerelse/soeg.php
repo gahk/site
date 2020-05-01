@@ -141,6 +141,10 @@ $monthToOfferMove = ceil($diff / (30*60*60*24));
 	<div class="col-sm-12" style="text-align:left;padding-top:8px;">
 	Vælg den første dato efter du har forsvaret speciale. Hvis du for eksempel forsvarer speciale den 8. juni, skal du vælge 1. juli.
 	</div>
+	<div class="col-sm-12" style="text-align:left;padding-top:8px;">
+	Fraflytningsdato, hvorved forståssidste dag,man harmulighed for at boherifølge 5-årsreglen
+eller normeretstudietid. Hvis studieplanen kræver fraflytning førstudiets afslutning, gælder
+denne dato	</div>
 </div>
 
 <br /><br />

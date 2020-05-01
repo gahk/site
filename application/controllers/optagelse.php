@@ -1,5 +1,4 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-
 class Optagelse extends MY_Controller {
 	public $indstillingMail = "indstillingen@gahk.dk";
 	public $heardAboutUsOption = array(
@@ -11,54 +10,41 @@ class Optagelse extends MY_Controller {
 		array("danish"=>"Set en plakat", "english"=>"I saw a poster"),
 		array("danish"=>"Selv fundet frem til det", "english"=>"I looked it up myself")
 	); 
-
-
 	public function __construct()	{
 		  parent::__construct();
-
 			$this->output->set_header("HTTP/1.0 200 OK");
 			$this->output->set_header("Cache-Control: no-store, no-cache, must-revalidate");
 			$this->output->set_header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
 			$this->output->set_header("Cache-Control: post-check=0, pre-check=0");
 			$this->output->set_header("Pragma: no-cache"); 
 			$this->output->cache(0);
-
 			$this->load->model('Page_model');
 			$this->load->model('Pylon_calendar_model');
 			$this->counter();
-
 			$this->load->library('recaptcha');
 			$this->load->helper('form');
-
 	}
-
-
 	public function index()	{
 		$pageId = 6;
 		$data['page'] = $this->Page_model->get_page($pageId);
 		$data['bgpic'] = $data['page'][0]->bgpic;
 		$data['pageid'] = $data['page'][0]->id;
 		$data['menucat'] = $data['page'][0]->menuCat;
-
 		$data['hidefooter'] = true;
 		$this->load->view('layout/header.php', $data);
 		$this->load->view('optagelse/overview');
 		$this->load->view('layout/bottom.php');
 	}
-
 	public function ansoeg()	{
 		$this->load->library('form_validation');
-
 		$data['recaptcha'] = $this->recaptcha->getWidget();
 		$pageId = 7;
-
 		$data['page'] = $this->Page_model->get_page($pageId);
 		$data['bgpic'] = $data['page'][0]->bgpic;
 		$data['pageid'] = $data['page'][0]->id;
 		$data['menucat'] = $data['page'][0]->menuCat;
 		$data['language'] = "danish";
 		$data['heardAboutUsOption'] = $this->heardAboutUsOption;
-
 		$data['success'] = false;
 		if($this->uri->segment(3) == "success"){
 			$data['success'] = true;
@@ -69,34 +55,29 @@ class Optagelse extends MY_Controller {
 		$this->load->view('optagelse/rundvisning_box');
 		$this->load->view('layout/bottom.php');
 	}
-
 	public function send_rundvisning(){
-
 		$this->load->library('form_validation');
-
 		$this->form_validation->set_rules('fullName', 'Fulde navn', 'required');
 		$this->form_validation->set_rules('gender', 'Køn', 'required');
 		$this->form_validation->set_rules('email', 'E-mail', 'required');
 		$this->form_validation->set_rules('age', 'Alder', 'required');
 		$this->form_validation->set_rules('studyyear', 'Antal år studeret', 'required');
+		$this->form_validation->set_rules('yearleft', 'Studieår tilbage', 'required');
+
 		$this->form_validation->set_rules('university', 'Universitet', 'required');
 		$this->form_validation->set_rules('heardAboutUs', 'Hvorfra har du hørt om kollegiet?', 'required');
 		$this->form_validation->set_rules('fieldofstudy', 'Studieretning', 'required');
 		$this->form_validation->set_rules('motivation', 'Motivation', 'required');
 		$this->form_validation->set_rules('g-recaptcha-response', 'Captcha', 'required|callback_validateCaptcha');
 		if ($this->form_validation->run() == FALSE){
-
 			$this->ansoeg();
 		} else {
-
 		//Persist
 		$_POST = $this->security->xss_clean($_POST);
 		unset($_POST['g-recaptcha-response']);
 		$_POST['typeOfAnsoegning'] = "rundvisning";
 		$this->load->model('Ansoegninger_model');
 		$ansoegId = $this->Ansoegninger_model->addAnsoegning($_POST);
-
-
 		//Mail
 		$message  = "Til indstillingen.\r\n";
 		$message .= "Forespørgsel om rundvisning er modtaget fra følgende person:\r\n\r\n";
@@ -104,6 +85,8 @@ class Optagelse extends MY_Controller {
 		$message .= "E-mail: ".$_POST['email']."\r\n";
 		$message .= "Alder: ".$_POST['age']."\r\n";
 		$message .= "Antal år studeret: ".$_POST['studyyear']."\r\n";
+		$message .= "Studieår tilbage: ".$_POST['yearleft']."\r\n";
+
 		$message .= "Universitet: ".$_POST['university']."\r\n";
 		$message .= "Studieretning: ".$_POST['fieldofstudy']."\r\n";
 		$message .= "Hvorfra har du hørt om kollegiet?: ".$_POST['heardAboutUs']."\r\n";
@@ -111,37 +94,28 @@ class Optagelse extends MY_Controller {
 		$message .= "Motivation:\r\n".$_POST['motivation']."\r\n\r\n";
 		$message .= "Registrer ansøgningen som modtaget på følgende link:\r\n<a href='".base_url("optagelse/setasreceived/".$ansoegId)."'>".base_url("optagelse/setasreceived/".$ansoegId)."</a>\r\n\r\n";
 		
-
 			if ($this->sendMail($message, $_POST['email'], $_POST['fullName'], false, $this->indstillingMail)){
-
 				//We send a auto-reply
 				$autosvar  = "".$_POST['fullName']."\r\n\r\n";
 				$autosvar .= "Vi har modtaget din anmodning om at komme\r\n";
 				$autosvar .= "på rundvisning på G. A. Hagemanns Kollegium.\r\n";
-				$autosvar .= "Vi vil besvare din anmodning hurtigst muligt.\r\n\r\n";
+				$autosvar .= "Vi bestræber os på at besvare så mange anmodninger som muligt, bliver du dog ikke inviteret på rundvisning, er du velkommen til at sende en anmodning igen.\r\n\r\n";
+				$autosvar .= "Vi giver desværre ikke afslag.\r\n\r\n";
 				$autosvar .= "Mvh. Indstillingen\r\n";
 				$autosvar .= "G. A. Hagemanns\r\n";
 				$autosvar .= "Kristianiagade 10\r\n";
 				$autosvar .= "2100 København Ø\r\n\r\n";
 				$autosvar .= "Dette er et autosvar og kan ikke besvares.";
 				$this->sendMail($autosvar, "autosvar@gahk.dk", "G. A. Hagemanns Kollegium", false, $_POST['email']);
-
 				redirect('/optagelse/ansoeg/success');
 			} else {
 				echo "Systemet er for tiden nede. Prøv igen senere eller kontakt os på it@gahk.dk";
 			}
-
-
 		}
-
 	}
-
-
-
 /**
 *   FREMLEJE
 */
-
 	public function fremlej()	{
 		$this->load->library('form_validation');
 		if($this->uri->segment(3) == "eng"){
@@ -156,30 +130,24 @@ class Optagelse extends MY_Controller {
 			$data['language'] = "danish";
 		}
 		$data['recaptcha'] = $this->recaptcha->getWidget();
-
 		//Sending if success message should be shown
 		$data['success'] = false;
 		if($this->uri->segment(3) == "success"){
 			$data['success'] = true;
 		}
-
-
 		$data['page'] = $this->Page_model->get_page($pageId);
 		$data['bgpic'] = $data['page'][0]->bgpic;
 		$data['pageid'] = $data['page'][0]->id;
 		$data['menucat'] = $data['page'][0]->menuCat;
 		$data['heardAboutUsOption'] = $this->heardAboutUsOption;
-
 		$data['hidefooter'] = true;
 		$this->load->view('layout/header.php', $data);
 		$this->load->view('small_standart_page');
 		$this->load->view('optagelse/fremlej_box', $data);
 		$this->load->view('layout/bottom.php');
 	}
-
 	public function send_fremleje(){
 		$this->load->library('form_validation');
-
 		$this->form_validation->set_rules('fullName', 'Fulde navn', 'required');
 		$this->form_validation->set_rules('email', 'E-mail', 'required');
 		$this->form_validation->set_rules('age', 'Alder', 'required');
@@ -191,14 +159,12 @@ class Optagelse extends MY_Controller {
 		if ($this->form_validation->run() == FALSE){
 			$this->fremlej();
 		} else {
-
 			//Persist
 			$_POST = $this->security->xss_clean($_POST);
 			unset($_POST['g-recaptcha-response']);
 			$_POST['typeOfAnsoegning'] = "fremleje";
 			$this->load->model('Ansoegninger_model');
 			$this->Ansoegninger_model->addAnsoegning($_POST);
-
 			//Mail
 			$message = "Til indstillingen.\r\n";
 			$message .= "Forespørgsel om fremleje er modtaget fra følgende person:\r\n\r\n";
@@ -209,8 +175,6 @@ class Optagelse extends MY_Controller {
 			$message .= "Hvorfra har du hørt om kollegiet?: ".$_POST['heardAboutUs']."\r\n";
 			$message .= "\nForespørgslen blev modtaget d. ".date("j/n/Y")."\r\n\r\n";
 			$message .= "Motivation:\r\n".$_POST['motivation']."";
-
-
 			//if ($this->sendMail($message, $_POST['email'], $_POST['fullName'], true, $this->indstillingMail)){
 			if(TRUE){
 				//Auto reply
@@ -236,24 +200,16 @@ class Optagelse extends MY_Controller {
 					$autosvar .= "Dette er et autosvar og kan ikke besvares.";
 				}
 				$this->sendMail($autosvar, "autosvar@gahk.dk", "G. A. Hagemanns Kollegium", true, $_POST['email']);
-
-
 				redirect('/optagelse/fremlej/success');
 			} else {
 				echo "The system is currently down. Try again later or contact us by it@gahk.dk";
 			}
-
 		}
-
-
 	}
-
-
 	private function sendMail($message, $from, $fromName, $isFremlejer, $to){
 		
 		$this->_CI =& get_instance();
     	$this->_CI->config->load('email');
-
     	$subject = "";
 			if($isFremlejer){
 				$subject = "GAHK Fremleje Ansogning: ".$_POST['fullName'];
@@ -261,41 +217,28 @@ class Optagelse extends MY_Controller {
 				$subject = "GAHK Rundvisning: ".$_POST['fullName'];
 			}
 		
-
-
-
 		$config['protocol'] = "smtp";
         $config['wordwrap'] = TRUE;
         $config['mailtype'] = "plain";
         $config['crlf'] = "\r\n";    
 		$config['newline'] = "\r\n"; 
-
     	$this->_eConfig = $this->_CI->config->item('smtp');
     
-
         $config['smtp_pass'] = $this->_eConfig['smtp_pass'];
         $config['smtp_host'] = $this->_eConfig['smtp_host'];
         $config['smtp_user'] = $this->_eConfig['smtp_user'];
-
         $this->load->library('email');
-
         $this->email->initialize($config);
 		$this->email->from('autosvar@gahk.dk', $fromName);
 		$this->email->to($to);
 		$this->email->subject($subject);
 		$this->email->message($message);
-
 		if(!$this->email->send()){
 			var_dump($this->email->print_debugger());
 			return FALSE;
 		}
 		return TRUE;
-
 	}
-
-
-
-
 	public function validateCaptcha($value) {
 	    $recaptcha = $_POST['g-recaptcha-response'];
         if (!empty($recaptcha)) {
@@ -307,17 +250,10 @@ class Optagelse extends MY_Controller {
             return FALSE;
         }
 	    
-
 	}
-
-
-
-
-
 	public function listansoegninger(){
 		$rowsPerPage = 50;
 		$this->load->library('session');
-
 		$username = $this->session->userdata('username');
 		$editpage = $this->session->userdata('editpage');
 		$administrator = $this->session->userdata('administrator');
@@ -325,7 +261,6 @@ class Optagelse extends MY_Controller {
 		$fullname = $this->session->userdata('fullname');
 		$akRole = $this->session->userdata('akRole');
 		$alumneId = $this->session->userdata('alumne_id');
-
 		$data['menucat'] = 0;
 		$data['bgpic'] = base_url("public/image/bg/adminBg.png");
 		if(!$username){
@@ -343,8 +278,6 @@ class Optagelse extends MY_Controller {
 				$data['pagename'] = "ansogninger";
 				$data['pageheader'] = "Ansøgninger";
 				$data['months'] = array("Jan","Feb","Mar","Apr","Maj","Jun","Jul","Aug","Sep","Okt","Nov","Dec");
-
-
 				$this->load->model('Ansoegninger_model');
 				$from = 0;
 				if(isset($_GET['from'])){
@@ -355,7 +288,6 @@ class Optagelse extends MY_Controller {
 				$data['numberofpages'] = ceil($this->Ansoegninger_model->numberOfAnsoegninger()/$rowsPerPage);
 				$data['currentpage'] = $from/$rowsPerPage;
 				$data['rowsPerPage'] = $rowsPerPage;
-
 //				$this->load->view('intern/header', $data);
 //				$this->load->view('layout/adminHeader.php', $data);
 //				$this->load->view('optagelse/list_ansoegninger_box.php');
@@ -365,10 +297,8 @@ class Optagelse extends MY_Controller {
 		}
 	
 	}
-
 	public function showAnsoegning($id){
 		$this->load->library('session');
-
 		$username = $this->session->userdata('username');
 		$editpage = $this->session->userdata('editpage');
 		$administrator = $this->session->userdata('administrator');
@@ -378,10 +308,8 @@ class Optagelse extends MY_Controller {
 		$alumneId = $this->session->userdata('alumne_id');
 		
 		
-
 		$data['menucat'] = 0;
 		$data['bgpic'] = base_url("public/image/bg/adminBg.png");
-
 		if(!$username){
 			$this->session->set_flashdata('redirectToUrlAfterLogin', current_url());
 			redirect("nyintern/admin");
@@ -398,15 +326,12 @@ class Optagelse extends MY_Controller {
 				$data['pageheader'] = "Ansøgning";
 				
 				$data['months'] = array("Jan","Feb","Mar","Apr","Maj","Jun","Jul","Aug","Okt","Sep","Nov","Dec");
-
 				$this->load->model('Ansoegninger_model');
 				$data['ansoegning'] = $this->Ansoegninger_model->getAnsoegningerById($id);
-
 				$data['success'] = false;
 				if($this->uri->segment(4) == "success"){
 					$data['success'] = true;
 				}
-
 				//$this->load->view('layout/adminHeader.php', $data);
 				//$this->load->view('intern/header', $data);		
 				//$this->load->view('optagelse/show_ansoegninger_box.php', $data);
@@ -415,10 +340,8 @@ class Optagelse extends MY_Controller {
 				$this->showInternPage('optagelse/show_ansoegninger_box.php', $data);
 		}
 	}
-
 	public function setasreceived($id){
 		$this->load->library('session');
-
 		$username = $this->session->userdata('username');
 		$editpage = $this->session->userdata('editpage');
 		$administrator = $this->session->userdata('administrator');
@@ -428,10 +351,8 @@ class Optagelse extends MY_Controller {
 		$alumneId = $this->session->userdata('alumne_id');
 		
 		
-
 		$data['menucat'] = 0;
 		$data['bgpic'] = base_url("public/image/bg/adminBg.png");
-
 		if(!$username){
 			$this->session->set_flashdata('redirectToUrlAfterLogin', current_url());
 			redirect("nyintern/admin");
@@ -445,8 +366,6 @@ class Optagelse extends MY_Controller {
 			
 		}
 	}
-
 }
-
 /* End of file welcome.php */
 /* Location: ./application/controllers/welcome.php */

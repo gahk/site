@@ -410,13 +410,51 @@ class Oelkaelder_model extends CI_Model {
 		
 		//$query = $this->db->query("SELECT name, SUM(price) as amount  FROM `intern_oelkaelder_purchase` JOIN `intern_oelkaelder_transaction` ON `intern_oelkaelder_purchase`.transactionId= `intern_oelkaelder_transaction`.ID JOIN `intern_oelkaelder_transaction_item` ON `intern_oelkaelder_transaction`.ID =`intern_oelkaelder_transaction_item`.transactionId JOIN `intern_oelkaelder_product` ON `intern_oelkaelder_transaction_item`.productId=`intern_oelkaelder_product`.productId WHERE `shopperId` = $shopperId AND `valid` = 1 AND `time` BETWEEN '$startYear/$startMonth/01' AND '$endYear/$endMonth/01' GROUP BY `intern_oelkaelder_product`.productId");
 
-		$query = $this->db->query("SELECT name, CAST(SUM(individualPrice) AS INT) as amount FROM `intern_oelkaelder_purchase` JOIN `intern_oelkaelder_transaction` ON `intern_oelkaelder_purchase`.transactionId= `intern_oelkaelder_transaction`.ID JOIN `intern_oelkaelder_transaction_item` ON `intern_oelkaelder_transaction`.ID =`intern_oelkaelder_transaction_item`.transactionId JOIN `intern_oelkaelder_individual_price` ON `intern_oelkaelder_transaction`.ID =`intern_oelkaelder_individual_price`.ID AND  `intern_oelkaelder_transaction_item`.productId =`intern_oelkaelder_individual_price`.productId JOIN `intern_oelkaelder_product` ON `intern_oelkaelder_individual_price`.productId=`intern_oelkaelder_product`.productId WHERE `shopperId` = $shopperId AND `valid` = 1 AND `time` BETWEEN '$startYear/$startMonth/01' AND '$endYear/$endMonth/01' GROUP BY `intern_oelkaelder_product`.productId");
+		$query = $this->db->query("SELECT i.name, CAST(SUM(i.sum) AS int) AS amount 
+									FROM (
+										SELECT p.productId, p.name,
+										@count:=(SELECT COUNT(*) FROM `intern_oelkaelder_purchase` AS pui WHERE pui.transactionId = ti.transactionId) AS count,
+										SUM(ti.price)/@count AS sum
+										FROM `intern_oelkaelder_transaction` AS t
+										JOIN `intern_oelkaelder_transaction_item` AS ti ON t.ID = ti.transactionId
+										JOIN `intern_oelkaelder_product` AS p ON ti.productId = p.productId
+										JOIN `intern_oelkaelder_purchase` AS pu ON t.ID = pu.transactionId
+										WHERE t.valid = 1 AND t.time BETWEEN '$startYear/$startMonth/01' AND '$endYear/$endMonth/01' AND pu.shopperId = $shopperId
+										GROUP BY ti.productId, count
+									) AS i
+									GROUP BY i.productId");
 		return $query->result();
 	}
 
 
 	function getSaleOverview($startDate, $endDate) {
-		$query = $this->db->query("SELECT name, CAST(SUM(individualPrice) AS INT) as amount FROM `intern_oelkaelder_purchase` JOIN `intern_oelkaelder_transaction` ON `intern_oelkaelder_purchase`.transactionId= `intern_oelkaelder_transaction`.ID JOIN `intern_oelkaelder_transaction_item` ON `intern_oelkaelder_transaction`.ID =`intern_oelkaelder_transaction_item`.transactionId JOIN `intern_oelkaelder_individual_price` ON `intern_oelkaelder_transaction`.ID =`intern_oelkaelder_individual_price`.ID AND  `intern_oelkaelder_transaction_item`.productId =`intern_oelkaelder_individual_price`.productId JOIN `intern_oelkaelder_product` ON `intern_oelkaelder_individual_price`.productId=`intern_oelkaelder_product`.productId WHERE `valid` = 1 AND `time` BETWEEN '$startDate 00:00:00' AND '$endDate 23:59:59' GROUP BY `intern_oelkaelder_product`.productId");
+		$query = $this->db->query("SELECT i.name, CAST(SUM(i.sum) AS int) AS amount 
+									FROM (
+										SELECT p.productId, p.name,
+										@count:=(SELECT COUNT(*) FROM `intern_oelkaelder_purchase` AS pui WHERE pui.transactionId = ti.transactionId) AS count,
+										SUM(ti.price)/@count AS sum
+										FROM `intern_oelkaelder_transaction` AS t
+										JOIN `intern_oelkaelder_transaction_item` AS ti ON t.ID = ti.transactionId
+										JOIN `intern_oelkaelder_product` AS p ON ti.productId = p.productId
+										JOIN `intern_oelkaelder_purchase` AS pu ON t.ID = pu.transactionId
+										WHERE t.valid = 1 AND t.time BETWEEN '$startDate 00:00:00' AND '$endDate 23:59:59'
+										GROUP BY ti.productId, count
+									) AS i
+									GROUP BY i.productId");
+		return $query->result();
+	}
+	
+	function getSaleQuantity($startDate, $endDate) {
+		$query = $this->db->query("SELECT p.name, ti.productId, CAST(CASE 
+										WHEN p.weight_price = 0 
+											THEN SUM(ti.quantity) 
+											ELSE SUM(ti.price) / p.weight_price * 100
+										END AS int) AS quantity
+									FROM `intern_oelkaelder_transaction` AS t
+									JOIN `intern_oelkaelder_transaction_item` AS ti on ti.transactionId = t.ID
+									JOIN `intern_oelkaelder_product` AS p ON p.productId = ti.productId
+									WHERE t.valid = 1 AND t.time BETWEEN '$startDate 00:00:00' AND '$endDate 23:59:59'
+									GROUP BY ti.productId, p.name");
 		return $query->result();
 	}
 

@@ -112,11 +112,12 @@ function menuItem($pname, $linkname, $url, $name, $condition = true) {
                 <i class="fa fa-caret-square-o-down"></i> Andet <b class="caret"></b>
               </a>
               <ul class="dropdown-menu">
-                <li><a  style="padding: 3px 15px 3px 25px;" href="http://gahk.dk/intern/andet/Den-Gyldne-Bog-Kønsskifteoperationen.pdf">Den Gyldne Bog</a></li>
-                <li><a  style="padding: 3px 15px 3px 25px;" href="http://gahk.dk/intern/andet/GahkPakken.pdf">GAHK-pakken</a></li>
-                <li><a  style="padding: 3px 15px 3px 25px;" href="http://gahk.dk/intern/andet/GahkFremlejekontrakt.pdf">Fremlejekontrakt</a></li>
-                <li><a  style="padding: 3px 15px 3px 25px;" href="http://gahk.dk/intern/andet/opsigelse.pdf">Opsigelse</a></li>
-                <li><a  style="padding: 3px 15px 3px 25px;" href="http://gahk.dk/intern/classic.php">Intern classic</a></li>
+                <li><a  style="padding: 3px 15px 3px 25px;" href="http://gahk.dk/intern/andet/Den_Gyldne_Bog_F2020_Praeventionen.pdf" target="_blank">Den Gyldne Bog</a></li>
+                <li><a  style="padding: 3px 15px 3px 25px;" href="http://gahk.dk/intern/andet/GahkPakken.pdf" target="_blank">GAHK-pakken</a></li>
+                <li><a  style="padding: 3px 15px 3px 25px;" href="http://gahk.dk/intern/andet/Fremlejekontrakt.pdf" target="_blank">Fremlejekontrakt</a></li>
+				<li><a  style="padding: 3px 15px 3px 25px;" href="http://gahk.dk/intern/andet/Guide_til_fremleje_af_vaerelse.pdf" target="_blank">Fremlejeguide</a></li>
+                <li><a  style="padding: 3px 15px 3px 25px;" href="http://gahk.dk/intern/andet/opsigelse.pdf" target="_blank">Opsigelse</a></li>
+                <li><a  style="padding: 3px 15px 3px 25px;" href="http://gahk.dk/intern/classic.php" target="_blank">Intern classic</a></li>
               </ul>
             </li>
             <?
@@ -125,7 +126,7 @@ function menuItem($pname, $linkname, $url, $name, $condition = true) {
           </ul>
 
 	<?if($username):?>
-          <ul class="nav navbar-nav navbar-right navbar-user"> 
+          <ul class="nav navbar-nav navbar-right navbar-user">
             <li class="dropdown user-dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> <?=$fullname?> <b class="caret"></b></a>
               <ul class="dropdown-menu">
@@ -141,5 +142,3 @@ function menuItem($pname, $linkname, $url, $name, $condition = true) {
       </nav>
 
       <div id="page-wrapper">
-
-       

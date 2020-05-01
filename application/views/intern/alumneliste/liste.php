@@ -44,7 +44,7 @@ if($access && isset($_GET['m']) && $_POST["month"]!='allPersons') {
 <?php
 //////////////////// Set up database connection ////////////////////
 include('adodb5/adodb.inc.php');
-$db = ADONewConnection('mysql');
+$db = ADONewConnection('mysqli');
 //	$db->debug = true;
 $db->Connect('localhost', $username, $password, $database); //parameters are from delt.php
 $ADODB_FETCH_MODE = ADODB_FETCH_ASSOC;

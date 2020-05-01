@@ -90,7 +90,51 @@ class Admin extends MY_Controller {
 		}
 
 	}
+	
+	public function sendMail(){
+		$subject = "Nye embedsgrupper";
+		$body = "
+Hej {gruppe},
 
+Det er nu en ny periode, og derfor har netværksgruppen været inde og ændre hvem der får hvilke mails.
+Dem af jer der har gerne vil have en ny kode til jeres mailkonto kan skrive til netværksgruppen på facebook, eller til it@gahk.dk, og bede os om at ændre den.
+Hvis du har fået en mail sendt til den forkerte embedsgruppe, eller hvis der er en fra din gruppe der mangler at få den, så sig endelig til.
+
+Mvh.
+Netværksgruppen
+
+P.s.
+Mailkontoerne kan tilgås på https://mail.one.com";
+		
+		$arr = array(
+		   "Ak-gruppe" => "ak@gahk.dk",
+		   "Indstilling" => "indstillingen@gahk.dk",
+		   "Inspektionen" => "inspektionen@gahk.dk",
+		   "Kulturgruppe" => "kulturgruppen@gahk.dk",
+		   "Køkkengruppe" => "kokken@gahk.dk",
+		   "Legatgruppe" => "legat@gahk.dk",
+		   "Netværksgruppe" => "it@gahk.dk",
+		   "PR-gruppe" => "pr@gahk.dk",
+		   "Pylongruppe" => "pylon@gahk.dk",
+		   "Regnskabsgruppe" => "regnskab@gahk.dk",
+		   "Repperne" => "repperne@gahk.dk",
+		   "Viceværter" => "vicevaert@gahk.dk",
+		   "Ølkælder" => "bierkeller@gahk.dk"
+		);
+		$res = "";
+		foreach ($arr as $key => $value) {
+			$res .= " " . $this ->mailFormatted($value, $subject, str_replace("{gruppe}",$key,$body));
+		}
+		echo $res;
+	}
+	
+	function mailFormatted($to,$subject,$body) {
+		$subject = '=?UTF-8?B?'.base64_encode($subject).'?=';
+		$headers = 'MIME-Version: 1.0' . "\r\n" . 'Content-type: text/plain; charset=UTF-8' . "\r\n";
+		$headers .= 'From: interngahk@gahk.dk' . "\r\n" . 'X-Mailer: PHP/' . phpversion();
+
+		return mail($to, $subject, $body, $headers);
+	}
 
 	public function useradm(){
 		$username = $this->session->userdata('username');
@@ -181,7 +225,7 @@ class Admin extends MY_Controller {
 				$statisticToString .= ",";
 			}
 			$statisticToString .= "['".$statistic[$i]['dato']."', ";
-			if(count($res) > 0){
+			if(($res) > 0){
 				$statistic[$i]['count'] = $res;
 				$statisticToString .= $statistic[$i]['count']."]";	
 			} else {
@@ -246,7 +290,41 @@ class Admin extends MY_Controller {
 		redirect("admin/useradm");
 		return;
 	}
-
+	
+	public function addAllUserAdm() {
+				$username = $this->session->userdata('username');
+		if(!$username){
+			$this->login();
+		} else {			
+			$this->load->model('Adminuser_model');
+			$arr = $this->Adminuser_model->listAllAdminUser();
+			foreach ($arr as $user) {
+				if ($user->alumne_id != $this->session->userdata('alumne_id')) {
+					$this->Adminuser_model->deleteuseradm($user->id);
+				}
+			}
+			$alumneListe = $this->Adminuser_model->getCurrentAlumneListe();
+			foreach ($alumneListe as $user) {
+				if ($user->alumne_ID != $this->session->userdata('alumne_id')) {
+					if ($user->workgroup == "Køkkengruppen") {
+						$this->Adminuser_model->addUserAdmAll($user->alumne_ID, 0, 0, 0, 0, 0, 1, 0);
+					} else if ($user->workgroup == "Inspektionen") {
+						$this->Adminuser_model->addUserAdmAll($user->alumne_ID, 0, 0, 0, 0, 1, 0, 0);
+					} else if ($user->workgroup == "Indstillingen") {
+						$this->Adminuser_model->addUserAdmAll($user->alumne_ID, 0, 1, 0, 0, 0, 0, 0);
+					} else if ($user->workgroup == "Ølkælderen") {
+						$this->Adminuser_model->addUserAdmAll($user->alumne_ID, 0, 0, 0, 0, 0, 0, 1);
+					} else if ($user->workgroup == "AK-gruppen") {
+						$this->Adminuser_model->addUserAdmAll($user->alumne_ID, 0, 0, 0, 1, 0, 0, 0);
+					} else if ($user->workgroup == "Netværksgruppen") {
+						$this->Adminuser_model->addUserAdmAll($user->alumne_ID, 1, 1, 1, 1, 1, 1, 1);
+					}
+				}
+			}
+			$this->session->set_flashdata('success', '<b>Success.</b> Alle alumner har nu fået tildelt deres roller fra intern.');
+			redirect("admin/useradm");
+		}
+	}
 
 	public function deleteuseradm($id){
 		$username = $this->session->userdata('username');

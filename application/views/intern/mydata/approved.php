@@ -2,7 +2,7 @@
 include('../delt.php');
 include('../adodb5/adodb.inc.php');
 if($_GET["password"] === 'mLXAC6V2wf') {
-	$db = ADONewConnection('mysql'); 
+	$db = ADONewConnection('mysqli'); 
 	//	$db->debug = true; 
 	$db->Connect('localhost', $username, $password, $database);
 	$ADODB_FETCH_MODE = ADODB_FETCH_ASSOC;

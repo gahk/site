@@ -38,10 +38,10 @@
 </td>
 <td><?= $condition->date?></td>
 <td><?=$condition->alumne_fullname?></td>
-<? foreach (split(";",$condition->criteria) as $crit): ?> 
+<? foreach (explode(";",$condition->criteria) as $crit): ?> 
 <? if($crit!=""):?>
 <td>
-	<?=split(":",$crit)[1]?>
+	<?=explode(":",$crit)[1]?>
 </td>
 <?endif;?>
 <? endforeach;?>

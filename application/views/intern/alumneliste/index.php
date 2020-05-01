@@ -1,4 +1,5 @@
 <?php
+error_reporting(-1);
 include('../delt.php');
 include('config.php');
 
@@ -7,8 +8,10 @@ if($_GET['m']) $headerArgs['hideMenu'] = 'true';
 insertHeader("Alumneliste", "Alumneliste", $headerArgs);
 echo '<body onLoad="document.forms.chooseList.typedpassword.focus()">';
 
-include('../adodb5/adodb.inc.php');
-$db = ADONewConnection('mysql'); 
+include('adodb5/adodb-errorpear.inc.php');
+include('adodb5/adodb.inc.php');
+
+$db = ADONewConnection('mysqli'); 
 $db->Connect('localhost', $username, $password, $database);
 $ADODB_FETCH_MODE = ADODB_FETCH_ASSOC;
 $db->Execute("SET NAMES utf8");

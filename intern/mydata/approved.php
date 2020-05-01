@@ -6,7 +6,7 @@ include('../adodb5/adodb.inc.php');
 
 if($_GET["password"] === 'mLXAC6V2wf') {
 
-	$db = ADONewConnection('mysql'); 
+	$db = ADONewConnection('mysqli'); 
 
 	//	$db->debug = true; 
 

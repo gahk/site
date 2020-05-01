@@ -23,7 +23,7 @@ include('adodb5/adodb.inc.php');
 $alumne_ID = $alumneId;
 //$userpassword = $_POST["userpassword"];
 
-$db = ADONewConnection('mysql'); 
+$db = ADONewConnection('mysqli'); 
 //	$db->debug = true; 
 $db->Connect('localhost', $username, $password, $database);
 $ADODB_FETCH_MODE = ADODB_FETCH_ASSOC;
@@ -196,7 +196,15 @@ if(true) {
 		<?php
 
 		if($admin) {
-			$allMacs = getAllMacsFromDB();
+			//$allMacs = getAllMacsFromDB();
+			$allMacs = $db->GetAll("SELECT firstName,lastName,deviceName,mac,timeAdded,intern_alumne.ID FROM (intern_alumne JOIN intern_alumne_macaddress ON intern_alumne_macaddress.alumne_ID = intern_alumne.ID)");
+			$macsAdmin = $db->GetAll("SELECT * FROM intern_alumne_macaddress WHERE intern_alumne_ID = 0");
+			if( !empty($macsAdmin) ) {
+				foreach($macsAdmin as $device) {
+					$adminDeviceToBeAdded = array("firstName" => "Netværksgruppen", "lastName" => "", "deviceName" => $device["deviceName"], "timeAdded" => $device["timeAdded"], "mac" => $device["mac"], "ID" => "0");
+					array_push($allMacs,$adminDeviceToBeAdded);
+				}
+			}
 			echo '<br><br><b>Alle MAC-adresser i databasen (antal: '.count($allMacs).')</b>';
 			echo '<table border="1">'; // table of all mac addresses
 			echo '<tr>';

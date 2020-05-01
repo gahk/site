@@ -46,7 +46,17 @@ class Adminuser_model extends CI_Model {
      return $query->result();
 	}
 	
+	function getCurrentAlumneListe() {
+		$query = $this->db->query("SELECT DISTINCT monthNumber FROM intern_alumne_liste ORDER BY monthNumber DESC");
+		$rs = $query->result();
+		$month = $rs[0]->monthNumber;
+		$listeQuery = $this->db->query("SELECT alumne_ID, workgroup FROM intern_alumne_liste WHERE monthNumber = $month");
+		return $listeQuery->result();;
+	}
 	
+	function addUserAdmAll($alumne_id, $editpage, $indstilling, $administrator, $ak, $inspektion, $kokkengruppe, $oelkaelder) {
+		$query = $this->db->query("INSERT INTO `gahk_admin_user`(`alumne_id`, `editpage`, `indstilling`, `administrator`, `ak`, `inspektion`, `kokkengruppe`, `oelkaelder`) VALUES ($alumne_id, $editpage, $indstilling, $administrator, $ak, $inspektion, $kokkengruppe, $oelkaelder);");
+	}
 }
 
 ?>

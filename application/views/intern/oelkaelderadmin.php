@@ -269,3 +269,36 @@
 		</div>
 	</div>
 </div>
+
+<div class="row" style="margin-top: 30px;">
+	<div class="col-lg-6">
+		<div class="panel panel-info">
+			<div class="panel-heading">Generer antal</div>
+			<div class="panel-body">
+				<form method="post" class="form-horizontal" action="<?=base_url('nyintern/oelkaelder/saleReportQuantity')?>">
+					<div class="form-group">
+						<label class="control-label col-sm-3" for="startdate">Startdato:</label>
+						<div class="col-sm-9">
+							<input type="date" class="form-control" name="startdate" id="startdate">
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="control-label col-sm-3" for="enddate">Slutdato:</label>
+						<div class="col-sm-9">
+							<input type="date" class="form-control" name="enddate" id="enddate">
+						</div>
+					</div>
+
+					<div class="form-group">
+						<div class="col-sm-12">
+							<div class="pull-right">
+								<button type="submit" class="btn btn-primary">Hent</button>
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>

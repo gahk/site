@@ -31,7 +31,7 @@ if($_POST['action'] === "sendDetails") {
 		redText("Ingen email-adresse indtastet<br><br>");
 	} else {
 		include('../adodb5/adodb.inc.php');
-		$db = ADONewConnection('mysql'); 
+		$db = ADONewConnection('mysqli'); 
 		$db->Connect('localhost', $username, $password, $database);
 		$ADODB_FETCH_MODE = ADODB_FETCH_ASSOC;
                 $db->Execute("SET NAMES utf8");
@@ -64,7 +64,7 @@ if($_POST['action'] === "sendDetails") {
 	$mac = trim(str_replace(':','-',strtoupper($_POST['mac'])));
 
 	include('../adodb5/adodb.inc.php');
-	$db = ADONewConnection('mysql'); 
+	$db = ADONewConnection('mysqli'); 
 	$db->Connect('localhost', $username, $password, $database);
 	$ADODB_FETCH_MODE = ADODB_FETCH_ASSOC;
         $db->Execute("SET NAMES utf8");

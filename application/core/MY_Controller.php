@@ -19,6 +19,7 @@ class MY_Controller extends CI_Controller {
 		$inspektion = $this->session->userdata('inspektion');
 		$kokkengruppe = $this->session->userdata('kokkengruppe');
 		$oelkaelder = $this->session->userdata('oelkaelder');
+		$admin = $this->session->userdata('administrator');
 
 		$vars['username'] = $username;
 		$vars['fullname'] = $fullname;
@@ -28,6 +29,8 @@ class MY_Controller extends CI_Controller {
 		$vars['inspektion'] = $inspektion;
 		$vars['kokkengruppe'] = $kokkengruppe;
 		$vars['oelkaelder'] = $oelkaelder;
+		$vars['admin'] = $admin;
+		
 
         $content  = $this->load->view('intern/header.php', $vars, $return);
         $content .= $this->load->view($template_name, $vars, $return);
@@ -111,8 +114,9 @@ class MY_Controller extends CI_Controller {
 		$this->load->model('Ansoegninger_model');
 		$week = date("W Y");
 		if(count($this->Ansoegninger_model->getPaamindelseForWeek($week)) == 0){
-			$this->sendPaamindelsesMail("indstillingen@gahk.dk");
-			$this->Ansoegninger_model->insertPaamindelseForWeek($week);
+			//Disabled by request
+			//$this->sendPaamindelsesMail("indstillingen@gahk.dk");
+			//$this->Ansoegninger_model->insertPaamindelseForWeek($week);
 		}
 		
 	}

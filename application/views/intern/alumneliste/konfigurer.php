@@ -24,7 +24,7 @@ if(true) {
     insertHeader("Alumneliste - Konfiguration", "Alumneliste - Konfiguration", $headerArgs);
 
     include('adodb5/adodb.inc.php');
-    $db = ADONewConnection('mysql');
+    $db = ADONewConnection('mysqli');
     $db->Connect('localhost', $username, $password, $database);
     $ADODB_FETCH_MODE = ADODB_FETCH_ASSOC;
     $db->Execute("SET NAMES utf8");

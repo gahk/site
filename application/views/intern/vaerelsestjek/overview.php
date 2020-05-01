@@ -47,7 +47,7 @@ function createFloorButtons(id, floorNumber, numberOfRooms){
 	for(i=firstRoom;i<firstRoom+numberOfRooms;i++){
 		var but = document.createElement('a');
 
-		
+
 		but.className = 'btn btn-default';
 		but.innerText = i.toString();
 
@@ -63,13 +63,13 @@ $(function(){
 	//stuen
 	for(i=1;i<=10;i++){
 		var but = document.createElement('a');
-		
+
 
 		but.className = 'btn btn-default';
 
 		if(i!=10){
 			but.innerText = "00"+i.toString();
-			
+
 		}
 		else but.innerText = "010";
 
@@ -86,6 +86,6 @@ $(function(){
 
 });
 
-	
+
 
 </script>

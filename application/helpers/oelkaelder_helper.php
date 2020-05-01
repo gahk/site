@@ -5,7 +5,7 @@ function priceStrToOrens($priceStr) {
 }
 
 function orensToPriceStr($orens) {
-	return "" + (((double)$orens) / 100.0);
+	return "" . (((double)$orens) / 100.0);
 }
 
 ?>

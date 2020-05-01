@@ -59,7 +59,7 @@
 
 		<div class="panel panel-default" style="margin-top: 30px;">
 			<div class="panel-body">
-				Indbetaling til ølkælderen foregår på reg.nr. 0400 konto nr. 4017048576. Ølkælderen tjekker indbetalinger med jævne mellemrum, så der kan gå flere dage før indbetalingen kan ses i din oversigt. Sørg for at indbetale tilstrækkeligt til at holde dig i positiv saldo.
+				Indbetaling til ølkælderen foregår på reg.nr. 6771 konto nr. 0005355865. Ølkælderen tjekker indbetalinger med jævne mellemrum, så der kan gå flere dage før indbetalingen kan ses i din oversigt. Sørg for at indbetale tilstrækkeligt til at holde dig i positiv saldo.
 			</div>
 			<div class="panel-footer">Indbetaling </div>
 		</div>

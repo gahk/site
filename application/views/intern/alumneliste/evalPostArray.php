@@ -23,7 +23,9 @@ if($_POST["action"]==="addPerson") { //////////// ADD NEW ALUMNI ////////////
 		}
 	}
 	
+	
 	if($alumne['alumne_ID']) { //////////// ADD EXISTING ALUMNI TO LIST ////////////
+		
 		$alumne["monthNumber"] = $month;
 		$alumne["room"]=$alumne["room2"];
 		$db->AutoExecute('intern_alumne_liste',$alumne,'INSERT');
@@ -32,11 +34,15 @@ if($_POST["action"]==="addPerson") { //////////// ADD NEW ALUMNI ////////////
 		$password = genRandomString(8);
 		$alumne["password"] = hash("sha256", $password);
 		$alumne["moveInDay"] = $_POST["moveInYear"]."-".leadingZero($_POST["moveInMonth"])."-01";
-		$db->AutoExecute('intern_alumne',$alumne,'INSERT');
+		if (!$db->AutoExecute('intern_alumne',$alumne,'INSERT')) {
+			die("alumne kunne ikke indsættes");
+		}
 		if($alumne[addToThisList]) {
 			$alumne['alumne_ID']=$db->Insert_ID();
 			$alumne["monthNumber"] = $month;
-			$db->AutoExecute('intern_alumne_liste',$alumne,'INSERT');
+			if (!$db->AutoExecute('intern_alumne_liste',$alumne,'INSERT')) {
+				die("alumne kunne ikke indsættes");
+			}
 		}
 		// send email to new resident if settings say so
 		$rs = $db->GetAll("select * from intern_alumne_emailtonew");

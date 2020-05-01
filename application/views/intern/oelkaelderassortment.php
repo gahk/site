@@ -142,6 +142,7 @@ usort($products, "cmp");
 					</div>
 				</form>
 			</div>
+			<div class="panel-heading">Max 100 kb, og 400x400. Brug <a href="http://compressimage.toolur.com/">denne</a> side til komprimering hvis nødvendigt.</div>
 		</div>
 	</div>
 </div>

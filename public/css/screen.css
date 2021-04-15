@@ -1,8 +1,12 @@
 body, div, label, input {
 	font-family: Arial, 'Ubuntu', sans-serif;
-	font-size: 12px;
+	font-size: 16px;
 	background-color: transparent;
 	padding: 0px 0px 0px 0px;
+}
+
+body, span, font {
+	color: #d5d5d5 !important;
 }
 
 p {
@@ -15,23 +19,29 @@ p {
 	position: relative;
 }
 
-header{
-	padding: 90px 0px 0px 30px;
-	text-shadow: 0px 0px 5px #FFFFFF, -1px 0 11px #FFFFFF, 0 1px 11px #FFFFFF,
-		   1px 0 11px #FFFFFF, 0 -1px 11px #FFFFFF;
-/*	text-shadow: 0px 0px 18px #FFFFFF, 0px 0px 12px #FFFFFF, 0px 0px 7px #FFFFFF;*/
-/*	text-shadow: -1px 0 11px #FFFFFF, 0 1px 11px #FFFFFF,
-		   1px 0 11px #FFFFFF, 0 -1px 11px #FFFFFF, 
-			-1px 0 8px #FFFFFF, 0 1px 8px #FFFFFF,
-		   1px 0 8px #FFFFFF, 0 -1px 8px #FFFFFF;*/
-	vertical-align: bottom;
+header {
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-start;
+	padding: 36px 48px 0;
 }
 
-.logo {
-	float: left;
-/*	background-color: #FFFFFF;*/
-	padding: 7px 7px 7px 7px;
-	margin: 0px 10px 0px 0px;
+header::before {
+	content: "";
+	display: inline-block;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-image: linear-gradient(0deg,
+	rgba(0, 0, 0, 0.0) 0%,
+	rgba(0, 0, 0, 0.0) 70%,
+	rgba(0, 0, 0, 0.2) 80%,
+	rgba(0, 0, 0, 0.7) 90%,
+	rgba(0, 0, 0, 0.9) 95%,
+	rgba(0, 0, 0, 1.0) 100%
+	);
 }
 
 header h5{
@@ -48,16 +58,31 @@ header h5{
 	padding: 0px 0px 17px 0px;
 }
 
+header .logo {
+	z-index: 1;
+	float: left;
+	/*	background-color: #FFFFFF;*/
+	margin: 0px 18px 0px 0px;
+	width: 60px;
+}
 
 h1, #logoText {
+	z-index: 1;
+	display: inline-block;
 	font-family: 'Julius Sans One', sans-serif;
 	font-size: 24px;
 	font-weight:normal;
-	padding: 20px 0px 17px 0px;
-	margin: 0px 0px 0px 0px;
+	padding: 0px 0px 0px 0px;
+	margin: 0px 24px 0px 0px;
 	line-height: 24px;
-	color: #333333;
+	color: #FFF;
 	text-decoration: none;
+	max-width: 220px;
+}
+
+a.logoLink {
+	display: flex;
+	align-items: center;
 }
 
 a.logoLink:hover {
@@ -74,78 +99,109 @@ hr {
 
 
 /* Menu */
-nav {
-	height: 30px;
-	background-color: #000000;
+nav.menu {
+	display: flex;
+	justify-content: flex-end;
+
+	/*background-color: #000000;*/
 	opacity:0.8;
-	font-size: 12
+	font-size: 16px;
+	text-transform: uppercase;
 }
 
 nav ul {
 	list-style-type: none;
-	margin: auto;
-	padding: 0px 0px 0px 30px;
+	padding: 0px 0px 0px 0px;
+	margin: 0;
 }
 
-nav li {
+nav.menu li {
 	float: left;
-	padding: 5px 15px 0px 0px;
+	padding: 0px 16px 0px 0px;
+}
+
+nav.menu li:last-of-type {
+	padding-right: 0;
 }
 
 nav a {
 	color: #FFFFFF;
 }
 
+nav li a {
+	padding-bottom: 3px;
+}
+
 nav a:hover {
-	color: #D6D6D6;
+	color: #FFFFFF;
+	opacity: 0.7;
 	text-decoration: none;
 }
 
-nav a.selectedItem {
-	color: #989898;
+nav.menu a:after {
+	position: relative;
+	height: 3px;
+	display: block;
+	content: '';
+	margin-bottom: 6px;
 }
 
-nav a.selectedItem:hover {
-	color: #989898;
+nav.menu a.selectedItem:after {
+	background: #fff;
 }
 
 
 
 /* Submenu */
 .submenu {
-	background-color: #444444;
+	position: absolute;
+	right: 48px;
+	display: flex;
+	justify-content: flex-end;
+	width: 120px;
+	float: right;
 	opacity:0.9;
-	font-size: 12;
-	height: 30px;
-	margin: 0px 0px -25px 0px;
+	font-size: 16px;
+	text-align: right;
 }
 
 .submenu ul {
 	list-style-type: none;
-	margin: auto;
-	padding: 0px 0px 0px 30px;
 }
 
 .submenu li {
-	float: left;
-	padding: 2px 15px 4px 0px;
+	float: right;
+	padding: 4px 0px;
 }
 
 .submenu a {
-	color: #989898;
+	display: block;
+	color: #FFF;
+	transition: transform 0.3s;
 }
 
 .submenu a:hover {
-	color: #FD5158;
+	opacity: 0.7;
 	text-decoration: none;
+	transform: translateX(-12px);
 }
 
 .submenu a.selectedItem {
-	color: #FD5158;
+	/*margin-right: 24px;*/
+	position: relative;
 }
 
-.submenu a.selectedItem:hover {
-	color: #FD5158;
+.submenu a.selectedItem:after {
+	position: absolute;
+	top: 0;
+	left: -20px;
+	width: 0;
+	height: 0;
+	border-top: 8px solid transparent;
+	border-bottom: 8px solid transparent;
+	border-left: 10px solid white;
+	display: block;
+	content: '';
 }
 
 
@@ -194,10 +250,10 @@ nav a.selectedItem:hover {
 }
 
 .transparency{
-	opacity:0.9;
-   filter:alpha(opacity=90);  
+	opacity:0.8;
+   filter:alpha(opacity=80);
    -moz-opacity:0.9;  
-   background-color:#FFFFFF;  
+   background-color:#000;
    width: 100%;  
    height: 15000px;  
    position:absolute;  
@@ -268,7 +324,7 @@ h2 {
 	font-family: 'Ubuntu', sans-serif;
 	font-size: 30px;
 	font-weight:normal;
-	color: #B651FD;
+	color: #73A8BF;
 	padding: 0px 0px 10px 0px;
 	margin: 0px 0px 0px 0px;
 }
@@ -278,7 +334,7 @@ h3 {
 	font-family: 'Ubuntu', sans-serif;
 	font-size: 18px;
 	font-weight:normal;
-	color: #FD5158;
+	color: #5092AF;
 	padding: 0px 0px 10px 0px;
 	margin: 0px 0px 0px 0px;
 	line-height: 25px;
@@ -402,14 +458,14 @@ input.error, textarea.error, select.error {
 
 blockquote {
 	overflow: hidden; /* clearfix alternative */
-	color: #454545;
+	color: #c7c7c7;
 	border-left: 0px;
 	padding: 20px 0px 0px 0px;
 	margin: 0px 0px 0px 0px;
 }
 
 blockquote p {
-	font-size: 12px;
+	font-size: 16px;
 	line-height: 150%;
 	padding: 0px 0px 0px 35px;
 }
@@ -417,10 +473,10 @@ blockquote p {
 blockquote:before {
 	display: block;
 	float: left;
-	margin: 8px 15px 0 0;
-	font-size: 40px; /* let's make it a big quote! */
+	margin: -24px 0 0 0;
+	font-size: 80px; /* let's make it a big quote! */
 	content: open-quote; /* here we define our :before as a smart quote. It could be any content, even the HTML entity alternative to this opening quote, that is “ */
-	color: #bababa;
+	color: #8e8e8e;
 	text-shadow: 0 1px 1px #909090;
 }
 blockquote:after {
@@ -474,12 +530,13 @@ h5 {
 /* Admin */
 
 #adminmenu {
+	position: absolute;
+	z-index: 10;
+	right: 0;
 	padding: 5px 10px 5px 10px;
 	-moz-border-radius: 3px;
 	border-bottom-left-radius: 3px;
 	border-bottom-right-radius: 3px;
-
-	float: right;
 	background-color: #FFFFFF;
 	opacity:0.9;
    filter:alpha(opacity=90);  
@@ -549,5 +606,10 @@ text-align: center;
 	width:100%;
 	height:100%;
 
+}
+
+.center {
+	display: flex;
+	justify-content: center;
 }
 
